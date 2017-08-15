@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[TransportType]
+(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[Name] NVARCHAR(50) NOT NULL UNIQUE
+	CONSTRAINT [PK_TransportType] PRIMARY KEY ([Id])
+);
