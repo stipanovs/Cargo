@@ -18,6 +18,12 @@ namespace CargoLogistic.Domain
             Country = country;
         }
 
+        public LocalityPlace(string name)
+        {
+            Name = name;
+            
+        }
+
         protected LocalityPlace()
         {
 

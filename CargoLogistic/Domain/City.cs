@@ -14,6 +14,11 @@ namespace CargoLogistic.Domain
            
         }
 
+        public City(string name) : base(name)
+        {
+
+        }
+
         public City()
         {
 

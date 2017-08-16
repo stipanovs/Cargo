@@ -32,8 +32,14 @@ namespace CargoLogistic.Domain
         protected Country()
         {
             _locations = new List<LocalityPlace>();
+            
         }
+        //public virtual void Add(LocalityPlace localityPlace)
+        //{
+        //    localityPlace.Country = this;
 
+        //    _locations.Add(localityPlace);
+        //}
         public override string ToString()
         {
             return $"Name: {Name}, IsoCode: {Alpha2Code}";

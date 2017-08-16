@@ -19,7 +19,7 @@ namespace CargoLogistic.Mapping
             Map(x => x.NumericCode);
             Map(x => x.Alpha2Code);
 
-            HasMany(x => x.Locations).Inverse();
+            HasMany(x => x.Locations).Cascade.All().Inverse();
         }
        
 

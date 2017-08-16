@@ -81,6 +81,7 @@
     <Compile Include="Comparer\CountryEqalityComparer.cs" />
     <Compile Include="CustomList.cs" />
     <Compile Include="Domain\LocalityPlace.cs" />
+    <Compile Include="Domain\PostDetailRow.cs" />
     <Compile Include="Domain\TransportType.cs" />
     <Compile Include="Domain\Village.cs" />
     <Compile Include="Domain\CargoSpecification.cs" />

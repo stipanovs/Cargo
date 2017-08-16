@@ -8,10 +8,11 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using CargoLogistic.Mapping;
+using NHibernate.Tool.hbm2ddl;
 
 namespace CargoLogistic.NHibernateInitialize
 {
-    public class NHibernateProvider
+    public static class NHibernateProvider
     {
         
         private const string connString = @"Server=.;Database=CARGO;Trusted_Connection=True";
@@ -36,6 +37,7 @@ namespace CargoLogistic.NHibernateInitialize
                      .ConnectionString(connString))
                      .Mappings(m => m.FluentMappings
                      .AddFromAssemblyOf<CountryMap>())
+                     .ExposeConfiguration(cfg =>new SchemaUpdate(cfg).Execute(false, true))
                      .BuildSessionFactory();
         }
     }
