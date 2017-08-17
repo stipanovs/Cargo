@@ -5,12 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using CargoLogistic.Domain;
+using NHibernate;
 
 namespace CargoLogistic.Repository
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
+
+        private readonly ISession _session;
+
         private readonly List<T> _contextList = new List<T>(); // DbSet
+
+        public Repository(ISession session)
+        {
+            _session = session;
+        }
+
 
         public void Create(T entity)
         {
@@ -20,6 +30,11 @@ namespace CargoLogistic.Repository
         public void Delete(T entity)
         {
             _contextList.Remove(entity);
+        }
+
+        public T Get(long Id)
+        {
+            return _session.Get<T>(Id);
         }
 
         public IEnumerable<T> GetAll()
@@ -32,16 +47,21 @@ namespace CargoLogistic.Repository
             return _contextList.FirstOrDefault(x => x.Id == ID);
         }
 
-        public void SaveToFile(T entity, string filename)
+        public T Load(long Id)
         {
-            FileInfo f = new FileInfo(filename);
-           
-            using (StreamWriter stream = f.AppendText())
-            {
-                stream.WriteLine(entity.ToString());
-                stream.Close();
-            }
+            return _session.Load<T>(Id);
         }
+
+        //public void SaveToFile(T entity, string filename)
+        //{
+        //    FileInfo f = new FileInfo(filename);
+           
+        //    using (StreamWriter stream = f.AppendText())
+        //    {
+        //        stream.WriteLine(entity.ToString());
+        //        stream.Close();
+        //    }
+        //}
 
         public void Update(T entity)
         {

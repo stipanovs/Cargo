@@ -20,6 +20,7 @@ using CargoLogistic.NHibernateInitialize;
 using NHibernate.SqlCommand;
 using NHibernate.Criterion;
 using NHibernate.Transform;
+using NHibernate;
 
 namespace CargoLogistic
 {
@@ -163,165 +164,253 @@ namespace CargoLogistic
 
             #endregion
 
-           
+            #region QueryOver
+            //using (var session = NHibernateProvider.GetSession())
+            //{
+            //    using (var transaction = session.BeginTransaction())
+            //    {
+
+            //        //var countries = session.QueryOver<Country>()
+            //        //    .Where(c => c.Alpha2Code == "RO")
+            //        //    .Select(c => c.Name)
+            //        //    .SingleOrDefault<string>();
+
+
+            //        //var countries = session.QueryOver<Country>()
+            //        //    .Where(c => c.Alpha2Code == "RO")
+            //        //    .Select(c => c.NumericCode)
+            //        //    .SingleOrDefault<int>();
+
+
+            //        //var countries = session.QueryOver<Country>()
+            //        //    .Where(c => c.Alpha2Code == "IT")
+            //        //    .SelectList(list => list
+            //        //    .Select(c => c.Name)
+            //        //    .Select(c => c.Alpha2Code)
+            //        //    .Select(x => x.NumericCode))
+            //        //    .List<object[]>();
+
+
+            //        //Country country = null;
+            //        //var country_projection =  session.QueryOver(() => country)
+            //        //    .Select(Projections.ProjectionList()
+            //        //    .Add(Projections.Property(() => country.Name))
+            //        //    .Add(Projections.Property(() => country.NumericCode)))
+            //        //    .List<object[]>();
+
+            //        //City city = null;
+            //        //var city_projection = session.QueryOver(() => city)
+            //        //    .Select(Projections.ProjectionList()
+            //        //    .Add(Projections.Property(() => city.Name))
+            //        //    .Add(Projections.Property(() => city.Country.Id)))
+            //        //    .List<object[]>();
+
+
+            //        //Country country = null;
+            //        //City city = null;
+            //        //var query = session.QueryOver(() => country)
+            //        //    .JoinAlias(c => c.Locations, () => city)
+            //        //    .List<Country>();
+
+            //        //Country country = null;
+            //        //City city = null;
+            //        //var query = session.QueryOver(() => country)
+            //        //    .JoinAlias(c => c.Locations, () => city)
+            //        //    .TransformUsing(Transformers.DistinctRootEntity)
+            //        //    .List<Country>();
+
+
+            //        //Country country = null;
+            //        //City city = null;
+            //        //Locality locality = null;
+            //        //var query = session.QueryOver(() => locality)
+            //        //    .JoinQueryOver(l => l.LocalityPlace, () => city)
+            //        //    .JoinQueryOver(c => c.Country, () => country)
+            //        //    .List();
+
+            //        //Country country = null;
+            //        //City city = null;
+            //        //Locality locality = null;
+            //        //var query = session.QueryOver(() => locality)
+            //        //    .JoinAlias(l => l.LocalityPlace, () => city)
+            //        //    .JoinAlias(() => city.Country, () => country)
+            //        //    .List();
+
+
+            //        //Country country = null;
+            //        //City city = null;
+            //        //Locality locality = null;
+
+            //        //var LocalityFromMoldova = session.QueryOver(() => locality)
+            //        //   .JoinAlias(l => l.LocalityPlace, () => city)
+            //        //   .JoinAlias(() => city.Country, () => country)
+            //        //   .Where(() => country.Alpha2Code == "MD" )
+            //        //   .SelectList(list => list
+            //        //   .Select(() => country.Name)
+            //        //   .Select(() => city.Name)
+            //        //   .Select(x => x.Line1))
+            //        //   .List<object[]>();
+
+            //        // group
+
+            //        //City city = null;
+            //        //Locality locality = null;
+            //        //// Cite adresse concerete am in fiecare City
+            //        //var group = session.QueryOver(() => locality)
+            //        //    .JoinAlias(() => locality.LocalityPlace, () => city)
+            //        //    .SelectList(list => list
+            //        //    .SelectGroup(() => city.Name)
+            //        //    .SelectCount(() => city.Id))
+            //        //    .List<object[]>();
+
+            //        //// Having
+            //        //City city = null;
+            //        //Locality locality = null;
+            //        //// mai mult de 2 adresse concerete in fiecare City
+            //        //var group = session.QueryOver(() => locality)
+            //        //    .JoinAlias(() => locality.LocalityPlace, () => city)
+            //        //    .SelectList(list => list
+            //        //    .SelectGroup(() => city.Name)
+            //        //    .SelectCount(() => city.Id))
+            //        //    .Where(Restrictions.Gt(Projections.Count(Projections.Property(() => city.Id)), 2))
+            //        //    .List<object[]>();
+
+
+
+            //        //  AliasToBean
+            //        // Returnam detaile la PostCargo
+            //        //PostCargo post = null;
+            //        //LocalityPlace cityFrom = null;
+            //        //LocalityPlace cityTo = null;
+            //        //Locality localityFrom = null;
+            //        //Locality localityTo = null;
+            //        //Country countryFrom = null;
+            //        //Country countryTo = null;
+            //        //PostDetailRow postDetailRow = null;
+
+
+            //        //IList<PostDetailRow> query = session.QueryOver(() => post)
+            //        //    .JoinAlias(p => p.LocationFrom, () => localityFrom)
+            //        //    .JoinAlias(() => post.LocationTo, () => localityTo)
+            //        //    .JoinAlias(() => localityFrom.LocalityPlace, () => cityFrom)
+            //        //    .JoinAlias(() => localityTo.LocalityPlace, () => cityTo)
+            //        //    .JoinAlias(() => cityFrom.Country, () => countryFrom)
+            //        //    .JoinAlias(() => cityTo.Country, () => countryTo)
+            //        //    .SelectList(list => list
+            //        //    .Select(() => post.DateFrom).WithAlias(() => postDetailRow.DateFrom)
+            //        //    .Select(() => post.DateTo).WithAlias(() => postDetailRow.DateTo)
+            //        //    .Select(() => countryFrom.Name).WithAlias(() => postDetailRow.CountryFrom)
+            //        //    .Select(() => cityFrom.Name).WithAlias(() => postDetailRow.CityFrom)
+            //        //    .Select(() => countryTo.Name).WithAlias(() => postDetailRow.CountryTo)
+            //        //    .Select(() => cityTo.Name).WithAlias(() => postDetailRow.CityTo)
+            //        //    .Select(x => x.Price).WithAlias(() => postDetailRow.Price))
+            //        //    .TransformUsing(Transformers.AliasToBean<PostDetailRow>())
+            //        //    .List<PostDetailRow>();
+
+            //        // DistinctRootEntity (fara distinct aveam 12, cu am 5, In SQL Distinc nu apare)
+            //        //Country country = null;
+            //        //City city = null;
+
+            //        //var query = session.QueryOver(() => country)
+            //        //    .JoinAlias(c => c.Locations, () => city)
+            //        //    .Where(() => country.NumericCode < 650)
+            //        //    .TransformUsing(Transformers.DistinctRootEntity)
+            //        //    .List<Country>();
+
+            //        //// Future , FutureValue
+
+                        ////IEnumerable<Country> countries = session.QueryOver<Country>()
+                        ////                           .Future<Country>();
+
+                        ////IFutureValue<int> numberOffCitys = session.QueryOver<City>()
+                        ////    .SelectList(list => list
+                        ////    .SelectCount(x => x.Id))
+                        ////    .FutureValue<int>();
+
+                        ////int numCity = numberOffCitys.Value;
+
+
+            //    }
+
+            //    Console.WriteLine("Ok");
+
+            //}
+
+            #endregion
+
+            #region QueryOver Advanced
+
             using (var session = NHibernateProvider.GetSession())
             {
                 using (var transaction = session.BeginTransaction())
                 {
+                    // 1 
+                    //var countrySubquery = QueryOver.Of<Country>()
+                    //    .Where(x => x.NumericCode > 458)
+                    //    .Select(x => x.Id);
 
-                    //var countries = session.QueryOver<Country>()
-                    //    .Where(c => c.Alpha2Code == "RO")
-                    //    .Select(c => c.Name)
-                    //    .SingleOrDefault<string>();
+                    //var query2 = session.QueryOver<City>()
+                    //    .WithSubquery.WhereProperty(x => x.Country)
+                    //    .In(countrySubquery)
+                    //    .Select(x=> x.Name)
+                    //    .List<string>();
 
-
-                    //var countries = session.QueryOver<Country>()
-                    //    .Where(c => c.Alpha2Code == "RO")
-                    //    .Select(c => c.NumericCode)
-                    //    .SingleOrDefault<int>();
-
-
-                    //var countries = session.QueryOver<Country>()
-                    //    .Where(c => c.Alpha2Code == "IT")
-                    //    .SelectList(list => list
-                    //    .Select(c => c.Name)
-                    //    .Select(c => c.Alpha2Code)
-                    //    .Select(x => x.NumericCode))
-                    //    .List<object[]>();
-
-
-                    //Country country = null;
-                    //var country_projection =  session.QueryOver(() => country)
-                    //    .Select(Projections.ProjectionList()
-                    //    .Add(Projections.Property(() => country.Name))
-                    //    .Add(Projections.Property(() => country.NumericCode)))
-                    //    .List<object[]>();
-
-                    //City city = null;
-                    //var city_projection = session.QueryOver(() => city)
-                    //    .Select(Projections.ProjectionList()
-                    //    .Add(Projections.Property(() => city.Name))
-                    //    .Add(Projections.Property(() => city.Country.Id)))
-                    //    .List<object[]>();
-
-
-                    //Country country = null;
-                    //City city = null;
-                    //var query = session.QueryOver(() => country)
-                    //    .JoinAlias(c => c.Locations, () => city)
-                    //    .List<Country>();
-
-                    //Country country = null;
-                    //City city = null;
-                    //var query = session.QueryOver(() => country)
-                    //    .JoinAlias(c => c.Locations, () => city)
-                    //    .TransformUsing(Transformers.DistinctRootEntity)
-                    //    .List<Country>();
-
-
-                    //Country country = null;
-                    //City city = null;
-                    //Locality locality = null;
-                    //var query = session.QueryOver(() => locality)
-                    //    .JoinQueryOver(l => l.LocalityPlace, () => city)
-                    //    .JoinQueryOver(c => c.Country, () => country)
-                    //    .List();
-
-                    //Country country = null;
-                    //City city = null;
-                    //Locality locality = null;
-                    //var query = session.QueryOver(() => locality)
-                    //    .JoinAlias(l => l.LocalityPlace, () => city)
-                    //    .JoinAlias(() => city.Country, () => country)
-                    //    .List();
-
-
-                    //Country country = null;
-                    //City city = null;
-                    //Locality locality = null;
-
-                    //var LocalityFromMoldova = session.QueryOver(() => locality)
-                    //   .JoinAlias(l => l.LocalityPlace, () => city)
-                    //   .JoinAlias(() => city.Country, () => country)
-                    //   .Where(() => country.Alpha2Code == "MD" )
-                    //   .SelectList(list => list
-                    //   .Select(() => country.Name)
-                    //   .Select(() => city.Name)
-                    //   .Select(x => x.Line1))
-                    //   .List<object[]>();
-
-                    // group
-
-                    //City city = null;
-                    //Locality locality = null;
-                    //// Cite adresse concerete am in fiecare City
-                    //var group = session.QueryOver(() => locality)
-                    //    .JoinAlias(() => locality.LocalityPlace, () => city)
-                    //    .SelectList(list => list
-                    //    .SelectGroup(() => city.Name)
-                    //    .SelectCount(() => city.Id))
-                    //    .List<object[]>();
-
-                    //// Having
-                    //City city = null;
-                    //Locality locality = null;
-                    //// mai mult de 2 adresse concerete in fiecare City
-                    //var group = session.QueryOver(() => locality)
-                    //    .JoinAlias(() => locality.LocalityPlace, () => city)
-                    //    .SelectList(list => list
-                    //    .SelectGroup(() => city.Name)
-                    //    .SelectCount(() => city.Id))
-                    //    .Where(Restrictions.Gt(Projections.Count(Projections.Property(() => city.Id)), 2))
-                    //    .List<object[]>();
-
-
-
-                    //  AliasToBean
-                    // Returnam detaile la PostCargo
-                    //PostCargo post = null;
-                    //LocalityPlace cityFrom = null;
-                    //LocalityPlace cityTo = null;
-                    //Locality localityFrom = null;
-                    //Locality localityTo = null;
-                    //Country countryFrom = null;
-                    //Country countryTo = null;
-                    //PostDetailRow postDetailRow = null;
-
-                    //IList<PostDetailRow> query = session.QueryOver(() => post)
-                    //    .JoinAlias(p => p.LocationFrom, () => localityFrom)
-                    //    .JoinAlias(() => post.LocationTo, () => localityTo)
-                    //    .JoinAlias(() => localityFrom.LocalityPlace, () => cityFrom)
-                    //    .JoinAlias(() => localityTo.LocalityPlace, () => cityTo)
-                    //    .JoinAlias(() => cityFrom.Country, () => countryFrom)
-                    //    .JoinAlias(() => cityTo.Country, () => countryTo)
-                    //    .SelectList(list => list
-                    //    .Select(() => post.DateFrom).WithAlias(() => postDetailRow.DateFrom)
-                    //    .Select(() => post.DateTo).WithAlias(() => postDetailRow.DateTo)
-                    //    .Select(() => countryFrom.Name).WithAlias(() => postDetailRow.CountryFrom)
-                    //    .Select(() => cityFrom.Name).WithAlias(() => postDetailRow.CityFrom)
-                    //    .Select(() => countryTo.Name).WithAlias(() => postDetailRow.CountryTo)
-                    //    .Select(() => cityTo.Name).WithAlias(() => postDetailRow.CityTo)
-                    //    .Select(x => x.Price).WithAlias(() => postDetailRow.Price))
-                    //    .TransformUsing(Transformers.AliasToBean<PostDetailRow>())
-                    //    .List<PostDetailRow>();
-
-                    // DistinctRootEntity (fara distinct aveam 12, cu am 5, In SQL Distinc nu apare)
+                    // FindMostPopularCityInCountry , cel mai preferat loc de pornire
                     Country country = null;
+                    Country innerCountry = null;
                     City city = null;
+                    LocalityPlace place = null;
+                    Village village = null;
+                    PostCargo post = null;
+                    Locality localityFrom = null;
 
-                    var query = session.QueryOver(() => country)
-                        .JoinAlias(c => c.Locations, () => city)
-                        .Where(() => country.NumericCode < 650)
-                        .TransformUsing(Transformers.DistinctRootEntity)
-                        .List<Country>();
+                    //// orasul cel mai des intilnit la plecare
+                    //var query1 = QueryOver.Of(() => post)
+                    //    .JoinAlias(() => post.LocationFrom, () => localityFrom)
+                    //    .JoinAlias(() => localityFrom.LocalityPlace, () => place)
+                    //    .SelectList(list => list
+                    //    .SelectGroup(() => place.Id)
+                    //    .SelectCount(() => place.Id))
+                    //    .OrderBy(Projections.Count(() => place.Id)).Desc
+                    //    .Take(1);
 
+                    /*
+                     QueryOver.Of(() => post)
+                           .JoinAlias(() => post.LocationFrom, () => localityFrom)
+                           .JoinAlias(() => localityFrom.LocalityPlace, () => place)
+                           .SelectList(list1 => list1
+                           .SelectCount(() => place.Country))
+                           .Where(Restrictions.EqProperty(Projections.Property(()=>place.Country.Id),
+                            Projections.Property(()=>country.Id)))).WithAlias(() => obj)
+                     */
+                    //// cite ori apare Country in postari
+                    var subquery = QueryOver.Of(() => post)
+                           .JoinAlias(() => post.LocationFrom, () => localityFrom)
+                           .JoinAlias(() => localityFrom.LocalityPlace, () => place)
+                           .SelectList(list1 => list1
+                           .SelectCount(() => place.Country))
+                           .Where(Restrictions.EqProperty(Projections.Property(() => place.Country.Id),
+                            Projections.Property(() => country.Id)));
 
+                                 
+                    var query3 = session.QueryOver(() => country)
+                        .SelectList(list => list
+                        .Select(() => country.Name)
+                        .Select(() => country.NumericCode)
+                        .SelectSubQuery(subquery))
+                        .OrderBy(Projections.SubQuery(subquery)).Desc
+                       .List<object>();
+                      
+                      
+                    Console.WriteLine("ok");
+                    
                 }
 
-                Console.WriteLine("Ok");
-
+                Console.WriteLine("Ok hokey");
             }
-           
+
+
+            #endregion
 
 
             #endregion
