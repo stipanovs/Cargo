@@ -10,12 +10,11 @@ namespace CargoLogistic.Repository
 {
     public interface IRepository<T> where T: EntityBase
     {
-        T Get(long Id);
+        
         T Load(long Id);
         T GetById(long Id);
-        void Create(T entity);
+        void Save(T entity);
         void Delete(T entity);
-        void Update(T entity);
         IEnumerable<T> GetAll();
         
     }

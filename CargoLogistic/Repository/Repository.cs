@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using CargoLogistic.Domain;
+using CargoLogistic.NHibernateInitialize;
 using NHibernate;
 
 namespace CargoLogistic.Repository
@@ -12,39 +13,49 @@ namespace CargoLogistic.Repository
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
 
-        private readonly ISession _session;
-
-        private readonly List<T> _contextList = new List<T>(); // DbSet
-
+        private readonly ISession _session = null;
+        
+        
+        public Repository()
+        {
+            _session = NHibernateProvider.GetSession();
+        }
         public Repository(ISession session)
         {
             _session = session;
         }
 
-
-        public void Create(T entity)
+       
+        public void Save(T entity)
         {
-            _contextList.Add(entity);
+            using (var transaction = _session.BeginTransaction())
+            {
+                _session.SaveOrUpdate(entity);
+                transaction.Commit();
+            }
         }
 
         public void Delete(T entity)
         {
-            _contextList.Remove(entity);
+            using (var transaction = _session.BeginTransaction())
+            {
+                _session.Delete(entity);
+                transaction.Commit();
+            }
+
         }
 
-        public T Get(long Id)
-        {
-            return _session.Get<T>(Id);
-        }
-
+       
         public IEnumerable<T> GetAll()
         {
-            return _contextList;
+            return _session.QueryOver<T>()
+                .List<T>();
         }
 
-        public T GetById(long ID)
+        public T GetById(long Id)
         {
-            return _contextList.FirstOrDefault(x => x.Id == ID);
+           
+            return _session.Get<T>(Id);
         }
 
         public T Load(long Id)
@@ -63,10 +74,10 @@ namespace CargoLogistic.Repository
         //    }
         //}
 
-        public void Update(T entity)
+        public void Dispose()
         {
-            int index = _contextList.IndexOf(entity);
-            _contextList[index] = entity;
+            _session.Close();
         }
+
     }
 }

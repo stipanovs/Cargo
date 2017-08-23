@@ -384,25 +384,25 @@ namespace CargoLogistic
                             Projections.Property(()=>country.Id)))).WithAlias(() => obj)
                      */
                     //// cite ori apare Country in postari
-                    var subquery = QueryOver.Of(() => post)
-                           .JoinAlias(() => post.LocationFrom, () => localityFrom)
-                           .JoinAlias(() => localityFrom.LocalityPlace, () => place)
-                           .SelectList(list1 => list1
-                           .SelectCount(() => place.Country))
-                           .Where(Restrictions.EqProperty(Projections.Property(() => place.Country.Id),
-                            Projections.Property(() => country.Id)));
+                    //var subquery = QueryOver.Of(() => post)
+                    //       .JoinAlias(() => post.LocationFrom, () => localityFrom)
+                    //       .JoinAlias(() => localityFrom.LocalityPlace, () => place)
+                    //       .SelectList(list1 => list1
+                    //       .SelectCount(() => place.Country))
+                    //       .Where(Restrictions.EqProperty(Projections.Property(() => place.Country.Id),
+                    //        Projections.Property(() => country.Id)));
 
                                  
-                    var query3 = session.QueryOver(() => country)
-                        .SelectList(list => list
-                        .Select(() => country.Name)
-                        .Select(() => country.NumericCode)
-                        .SelectSubQuery(subquery))
-                        .OrderBy(Projections.SubQuery(subquery)).Desc
-                       .List<object>();
+                    //var query3 = session.QueryOver(() => country)
+                    //    .SelectList(list => list
+                    //    .Select(() => country.Name)
+                    //    .Select(() => country.NumericCode)
+                    //    .SelectSubQuery(subquery))
+                    //    .OrderBy(Projections.SubQuery(subquery)).Desc
+                    //   .List<object>();
                       
                       
-                    Console.WriteLine("ok");
+                    //Console.WriteLine("ok");
                     
                 }
 
@@ -412,7 +412,11 @@ namespace CargoLogistic
 
             #endregion
 
-
+            var repository = new Repository<Country>();
+            repository.Dispose();
+            //var rominia = repository.GetById(2);
+            //rominia.NumericCode = 777;
+            //repository.Save(rominia);
             #endregion
 
             Console.ReadKey();
