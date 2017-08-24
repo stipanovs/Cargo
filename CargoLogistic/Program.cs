@@ -6,16 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CargoLogistic.Domain;
-using CargoLogistic.Repository;
-using CargoLogistic.Events;
-using CargoLogistic.Domain.SpecificationType;
+using CargoLogistic.Domain.Repository;
 using static System.Console;
 using HibernatingRhinos.Profiler.Appender.NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Driver;
 using NHibernate.Dialect;
 using System.Reflection;
-using CargoLogistic.Domain.Users;
+using CargoLogistic.Domain.Entities;
 using CargoLogistic.NHibernateInitialize;
 using NHibernate.SqlCommand;
 using NHibernate.Criterion;
@@ -28,6 +26,9 @@ namespace CargoLogistic
     {
         static void Main(string[] args)
         {
+
+            //App_Start.NHibernateProfilerBootstrapper.PreStart();
+
 
             #region countries
 
@@ -515,4 +516,5 @@ namespace CargoLogistic
     
     
 }
+
 

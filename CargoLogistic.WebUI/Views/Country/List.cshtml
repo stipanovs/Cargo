@@ -1,0 +1,17 @@
+﻿@using CargoLogistic.Domain.Entities
+@model IEnumerable<CargoLogistic.Domain.Entities.Country>
+
+@{
+    ViewBag.Title = "List of Country";
+}
+
+@foreach (var c in Model)
+{
+    <div>
+        <h3>@c.Name</h3>
+        <h3>@c.Alpha2Code</h3>
+        <h3>@c.NumericCode</h3>
+        <p>=============================</p>
+    </div>
+}
+

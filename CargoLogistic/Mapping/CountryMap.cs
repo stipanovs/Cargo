@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.Mapping;
-using CargoLogistic.Domain;
+using CargoLogistic.Domain.Entities;
 
 
-namespace CargoLogistic.Mapping
+namespace CargoLogistic.Domain.Mapping
 {
     public class CountryMap : ClassMap<Country>
     {

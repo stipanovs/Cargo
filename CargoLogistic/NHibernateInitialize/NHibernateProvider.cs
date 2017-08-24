@@ -7,7 +7,7 @@ using NHibernate.Cfg;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
-using CargoLogistic.Mapping;
+using CargoLogistic.Domain.Mapping;
 using NHibernate.Tool.hbm2ddl;
 
 namespace CargoLogistic.NHibernateInitialize

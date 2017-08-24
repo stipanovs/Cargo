@@ -1,7 +1,7 @@
-﻿using CargoLogistic.Domain;
+﻿using CargoLogistic.Domain.Entities;
 using FluentNHibernate.Mapping;
 
-namespace CargoLogistic.Mapping
+namespace CargoLogistic.Domain.Mapping
 {
     public class PostTransportMap : ClassMap<PostTransport>
     {

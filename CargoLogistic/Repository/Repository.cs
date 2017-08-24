@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
-using CargoLogistic.Domain;
+using CargoLogistic.Domain.Entities;
 using CargoLogistic.NHibernateInitialize;
 using NHibernate;
 
-namespace CargoLogistic.Repository
+namespace CargoLogistic.Domain.Repository
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
@@ -45,8 +44,7 @@ namespace CargoLogistic.Repository
 
         }
 
-       
-        public IEnumerable<T> GetAll()
+       public IEnumerable<T> GetAll()
         {
             return _session.QueryOver<T>()
                 .List<T>();
@@ -63,17 +61,7 @@ namespace CargoLogistic.Repository
             return _session.Load<T>(Id);
         }
 
-        //public void SaveToFile(T entity, string filename)
-        //{
-        //    FileInfo f = new FileInfo(filename);
-           
-        //    using (StreamWriter stream = f.AppendText())
-        //    {
-        //        stream.WriteLine(entity.ToString());
-        //        stream.Close();
-        //    }
-        //}
-
+        
         public void Dispose()
         {
             _session.Close();

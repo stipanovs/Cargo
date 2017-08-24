@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CargoLogistic.Events
+namespace CargoLogistic.Domain.Events
 {
     public class PostPriceChangedEventArgs : EventArgs
     {

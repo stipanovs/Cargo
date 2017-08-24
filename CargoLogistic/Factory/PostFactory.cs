@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CargoLogistic.Domain;
-using CargoLogistic.Domain.SpecificationType;
-using Microsoft.Scripting.Utils;
+using CargoLogistic.Domain.Entities;
+using CargoLogistic.Domain.Entities.SpecificationType;
 
 
-namespace CargoLogistic
+
+namespace CargoLogistic.Domain.Factory
 {
     
     public class PostFactory

@@ -1,8 +1,8 @@
-﻿using CargoLogistic.Domain;
+﻿using CargoLogistic.Domain.Entities;
 using FluentNHibernate.Mapping;
-using Remotion.Linq.Parsing.Structure.ExpressionTreeProcessors;
 
-namespace CargoLogistic.Mapping
+
+namespace CargoLogistic.Domain.Mapping
 {
     public class CargoSpecificationMap : ClassMap<CargoSpecification>
     {
