@@ -13,8 +13,8 @@ namespace CargoLogistic.Domain.Repository
     {
 
         private readonly ISession _session = null;
-        
-        
+
+       
         public Repository()
         {
             _session = NHibernateProvider.GetSession();
@@ -23,6 +23,8 @@ namespace CargoLogistic.Domain.Repository
         {
             _session = session;
         }
+
+
 
        
         public void Save(T entity)

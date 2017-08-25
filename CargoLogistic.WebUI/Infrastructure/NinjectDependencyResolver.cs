@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
 using CargoLogistic.Domain.Entities;
@@ -33,7 +34,8 @@ namespace CargoLogistic.WebUI.Infrastructure
         private void AddBindings()
         {
             // add here
-            kernel.Bind<IRepository<Country>>().To<Repository<Country>>();
+            //kernel.Bind<IRepository<Country>>().To<Repository<Country>>();
+            kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>));
         }
     }
 }
