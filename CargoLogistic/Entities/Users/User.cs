@@ -18,9 +18,7 @@ namespace CargoLogistic.Domain.Entities.Users
         public virtual Country Country { get; set; }
         public virtual Locality Locality { get; set; }
         public virtual string Email { get; set; }
-
-        public virtual bool _bloked { get; set; }
-
+        
         private readonly List<UserMessageBox> BoxMessages = new List<UserMessageBox>();
 
         public User(string name, OwnerShipType ownershiptype, ActivityProfile acitvityProfile, Person contactPerson,
@@ -33,7 +31,7 @@ namespace CargoLogistic.Domain.Entities.Users
             Country = country;
             Locality = locality;
             Email = email;
-            _bloked = false;
+            
         }
 
         public User()

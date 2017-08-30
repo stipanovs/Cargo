@@ -37,7 +37,7 @@ namespace CargoLogistic.NHibernateInitialize
                      .ConnectionString(connString))
                      .Mappings(m => m.FluentMappings
                      .AddFromAssemblyOf<CountryMap>())
-                     .ExposeConfiguration(cfg =>new SchemaUpdate(cfg).Execute(false, true))
+                     //.ExposeConfiguration(cfg =>new SchemaUpdate(cfg).Execute(false, true))
                      .BuildSessionFactory();
         }
     }
