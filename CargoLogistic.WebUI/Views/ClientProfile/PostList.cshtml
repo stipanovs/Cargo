@@ -1,0 +1,33 @@
+﻿@using CargoLogistic.Domain.Entities
+@model IEnumerable<Post>
+
+@{
+    ViewBag.Title = "Post List";
+}
+
+<h2>User's Post List</h2>
+
+<div class="col-md-9">
+    <table class="table">
+        <thead class="table-bordered">
+        <tr>
+            <td>Id</td>
+            <td>Date</td>
+            <td>Price</td>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.DateFrom</td>
+                <td>@p.Price</td>
+            </tr>
+        }
+        </tbody>
+
+    </table>
+</div>
+
+

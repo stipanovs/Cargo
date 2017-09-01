@@ -1,5 +1,5 @@
 ﻿@using CargoLogistic.Domain.Entities
-@model IEnumerable<CargoLogistic.Domain.Entities.Country>
+@model IEnumerable<Country>
 
 @{
     ViewBag.Title = "List of Country";
@@ -12,4 +12,6 @@
         <p>=============================</p>
     </div>
 }
+
+@Html.ActionLink("Home", "Index", "Home")
 

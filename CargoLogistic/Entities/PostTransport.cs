@@ -13,7 +13,7 @@ namespace CargoLogistic.Domain.Entities
         public virtual TransportSpecification Specification { get; set; }
 
         public PostTransport(DateTime dataFrom, DateTime dateTo, Locality locationFrom,
-            Locality locationTo, double price, string additionalInformation, TransportSpecification transportSpecification = null, User user = null) 
+            Locality locationTo, double price, string additionalInformation, TransportSpecification transportSpecification = null, ApplicationUser user = null) 
             : base(dataFrom, dateTo, locationFrom, locationTo, price, additionalInformation, user)
         {
             Specification = transportSpecification;

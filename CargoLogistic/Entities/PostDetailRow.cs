@@ -18,8 +18,6 @@ namespace CargoLogistic.Domain.Entities
         public string CityTo { get; set; }
 
         public double Price { get; set; }
-
-
-
+        
     }
 }

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<NHibernate.AspNet.Identity.IdentityRole>
+
+@{
+    ViewBag.Title = "Role List";
+}
+
+<hr/>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>Role Name</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+        </tr>
+    }
+
+</table>

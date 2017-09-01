@@ -11,7 +11,7 @@ namespace CargoLogistic.Domain.Entities
 {
     public abstract class Post : EntityBase
     {
-        public virtual User User { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public virtual DateTime PublicationDate { get; set; } 
         public virtual DateTime DateFrom { get;  set; }
         public virtual DateTime DateTo { get;  set; }
@@ -37,7 +37,7 @@ namespace CargoLogistic.Domain.Entities
         public virtual string AdditionalInformation { get; set; } 
            
         public Post(DateTime dataFrom, DateTime dateTo, 
-            Locality localityFrom, Locality localityTo, double price, string additionalInformation, User user)
+            Locality localityFrom, Locality localityTo, double price, string additionalInformation, ApplicationUser user)
         {
             DateFrom = dataFrom;
             DateTo = dateTo;

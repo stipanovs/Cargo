@@ -20,6 +20,7 @@ namespace CargoLogistic.WebUI.Controllers
         
     
         // GET: Country
+        [Authorize]
         public ViewResult List()
         {
             var countries = _repository.GetAll()

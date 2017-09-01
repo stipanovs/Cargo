@@ -44,6 +44,9 @@
     <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.4.0.2\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Dynamic, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Dynamic.dll</HintPath>
     </Reference>
@@ -55,6 +58,9 @@
     </Reference>
     <Reference Include="NHibernate, Version=4.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.4.1.1.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.AspNet.Identity, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.AspNet.Identity.2.2.1.0\lib\net45\NHibernate.AspNet.Identity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -95,6 +101,8 @@
     <Compile Include="Entities\LocalityPlace.cs" />
     <Compile Include="Entities\PostDetailRow.cs" />
     <Compile Include="Entities\TransportType.cs" />
+    <Compile Include="Entities\Users\ApplicationManager.cs" />
+    <Compile Include="Entities\Users\ApplicationUser.cs" />
     <Compile Include="Entities\Village.cs" />
     <Compile Include="Entities\CargoSpecification.cs" />
     <Compile Include="Entities\SpecificationType\ISpecification.cs" />
@@ -102,6 +110,7 @@
     <Compile Include="Factory\PostFactory.cs" />
     <Compile Include="Entities\PostTransport.cs" />
     <Compile Include="Entities\TransportSpecification.cs" />
+    <Compile Include="Mapping\ApplicationUserMap.cs" />
     <Compile Include="Mapping\CargoSpecificationMap.cs" />
     <Compile Include="Mapping\CityMap.cs" />
     <Compile Include="Mapping\CountryMap.cs" />
@@ -120,7 +129,9 @@
     <Compile Include="Entities\Post.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IPostRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\PostRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Entities\Users\ActivityProfile.cs" />
     <Compile Include="Entities\Users\OwnerShipType.cs" />

@@ -17,7 +17,9 @@ namespace CargoLogistic.Domain.Mapping
             Map(x => x.Price).Column("Price");
             References(x => x.Specification).Column("CargoSpecificationId");
             Map(x => x.AdditionalInformation).Column("AdditionalInformation");
-          
+
+            References(x => x.User).Column("UserId");
+
         }
     }
 }
