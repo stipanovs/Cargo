@@ -37,7 +37,9 @@ namespace CargoLogistic.WebUI.Infrastructure
             //kernel.Bind<IRepository<Country>>().To<Repository<Country>>();
             kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>));
             kernel.Bind(typeof(IPostRepository)).To(typeof(PostRepository));
-            
+            kernel.Bind(typeof(ICountryRepository)).To(typeof(CountryRepository));
+            kernel.Bind(typeof(ILocalityRepository)).To(typeof(LocalityRepository));
+
         }
     }
 }

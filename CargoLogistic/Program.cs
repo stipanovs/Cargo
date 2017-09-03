@@ -42,11 +42,11 @@ namespace CargoLogistic
 
             #region Location
 
-            //Locality locChisinau = new Locality(new City("Chisinau", moldova), new AddressDetail("2048", "str. Stefan cel mare 34"));
-            //Locality locBardar = new Locality(new Village("Bardar", moldova), new AddressDetail("2048", "no street"));
-            //Locality locMoscow = new Locality(new City("Moscow", russia));
-            //Locality locRome = new Locality(new Village("Padovana", italia));
-            //Locality locKiev = new Locality( localityPlace: new City("Kiev", ucraina));
+            //Location locChisinau = new Location(new City("Chisinau", moldova), new AddressDetail("2048", "str. Stefan cel mare 34"));
+            //Location locBardar = new Location(new Village("Bardar", moldova), new AddressDetail("2048", "no street"));
+            //Location locMoscow = new Location(new City("Moscow", russia));
+            //Location locRome = new Location(new Village("Padovana", italia));
+            //Location locKiev = new Location( locality: new City("Kiev", ucraina));
 
             #endregion
 
@@ -127,8 +127,8 @@ namespace CargoLogistic
 
             //var beerCargoSpecification = new CargoSpecification("Karlsberg Beer", 7.5, 3.7);
             //var woodCargoSpecification = new CargoSpecification("Wood", 15.45, 27.00);
-            //var truckSpecification = new TransportSpecification(TransportType.Truck, 20.00, 35.00);
-            //var minibusSpecification = new TransportSpecification(TransportType.Minibus, 6.00, 7.8);
+            //var truckSpecification = new TransportSpecification(PostTransportType.Truck, 20.00, 35.00);
+            //var minibusSpecification = new TransportSpecification(PostTransportType.Minibus, 6.00, 7.8);
 
             //var newPostCargo = postFactory.CreateNewPost(
             //    new DateTime(2017, 07, 25), new DateTime(2017, 08, 05), locRome,
@@ -223,27 +223,27 @@ namespace CargoLogistic
 
             //        //Country country = null;
             //        //City city = null;
-            //        //Locality locality = null;
-            //        //var query = session.QueryOver(() => locality)
-            //        //    .JoinQueryOver(l => l.LocalityPlace, () => city)
+            //        //Location location = null;
+            //        //var query = session.QueryOver(() => location)
+            //        //    .JoinQueryOver(l => l.Locality, () => city)
             //        //    .JoinQueryOver(c => c.Country, () => country)
             //        //    .List();
 
             //        //Country country = null;
             //        //City city = null;
-            //        //Locality locality = null;
-            //        //var query = session.QueryOver(() => locality)
-            //        //    .JoinAlias(l => l.LocalityPlace, () => city)
+            //        //Location location = null;
+            //        //var query = session.QueryOver(() => location)
+            //        //    .JoinAlias(l => l.Locality, () => city)
             //        //    .JoinAlias(() => city.Country, () => country)
             //        //    .List();
 
 
             //        //Country country = null;
             //        //City city = null;
-            //        //Locality locality = null;
+            //        //Location location = null;
 
-            //        //var LocalityFromMoldova = session.QueryOver(() => locality)
-            //        //   .JoinAlias(l => l.LocalityPlace, () => city)
+            //        //var LocalityFromMoldova = session.QueryOver(() => location)
+            //        //   .JoinAlias(l => l.Locality, () => city)
             //        //   .JoinAlias(() => city.Country, () => country)
             //        //   .Where(() => country.Alpha2Code == "MD" )
             //        //   .SelectList(list => list
@@ -255,10 +255,10 @@ namespace CargoLogistic
             //        // group
 
             //        //City city = null;
-            //        //Locality locality = null;
+            //        //Location location = null;
             //        //// Cite adresse concerete am in fiecare City
-            //        //var group = session.QueryOver(() => locality)
-            //        //    .JoinAlias(() => locality.LocalityPlace, () => city)
+            //        //var group = session.QueryOver(() => location)
+            //        //    .JoinAlias(() => location.Locality, () => city)
             //        //    .SelectList(list => list
             //        //    .SelectGroup(() => city.Name)
             //        //    .SelectCount(() => city.Id))
@@ -266,10 +266,10 @@ namespace CargoLogistic
 
             //        //// Having
             //        //City city = null;
-            //        //Locality locality = null;
+            //        //Location location = null;
             //        //// mai mult de 2 adresse concerete in fiecare City
-            //        //var group = session.QueryOver(() => locality)
-            //        //    .JoinAlias(() => locality.LocalityPlace, () => city)
+            //        //var group = session.QueryOver(() => location)
+            //        //    .JoinAlias(() => location.Locality, () => city)
             //        //    .SelectList(list => list
             //        //    .SelectGroup(() => city.Name)
             //        //    .SelectCount(() => city.Id))
@@ -281,20 +281,20 @@ namespace CargoLogistic
             //        //  AliasToBean
             //        // Returnam detaile la PostCargo
             //        //PostCargo post = null;
-            //        //LocalityPlace cityFrom = null;
-            //        //LocalityPlace cityTo = null;
-            //        //Locality localityFrom = null;
-            //        //Locality localityTo = null;
+            //        //Locality cityFrom = null;
+            //        //Locality cityTo = null;
+            //        //Location locationFrom = null;
+            //        //Location locationTo = null;
             //        //Country countryFrom = null;
             //        //Country countryTo = null;
             //        //PostDetailRow postDetailRow = null;
 
 
             //        //IList<PostDetailRow> query = session.QueryOver(() => post)
-            //        //    .JoinAlias(p => p.LocationFrom, () => localityFrom)
-            //        //    .JoinAlias(() => post.LocationTo, () => localityTo)
-            //        //    .JoinAlias(() => localityFrom.LocalityPlace, () => cityFrom)
-            //        //    .JoinAlias(() => localityTo.LocalityPlace, () => cityTo)
+            //        //    .JoinAlias(p => p.LocationFrom, () => locationFrom)
+            //        //    .JoinAlias(() => post.LocationTo, () => locationTo)
+            //        //    .JoinAlias(() => locationFrom.Locality, () => cityFrom)
+            //        //    .JoinAlias(() => locationTo.Locality, () => cityTo)
             //        //    .JoinAlias(() => cityFrom.Country, () => countryFrom)
             //        //    .JoinAlias(() => cityTo.Country, () => countryTo)
             //        //    .SelectList(list => list
@@ -360,15 +360,15 @@ namespace CargoLogistic
                     Country country = null;
                     Country innerCountry = null;
                     City city = null;
-                    LocalityPlace place = null;
+                    Locality place = null;
                     Village village = null;
                     PostCargo post = null;
-                    Locality localityFrom = null;
+                    Location locationFrom = null;
 
                     //// orasul cel mai des intilnit la plecare
                     //var query1 = QueryOver.Of(() => post)
-                    //    .JoinAlias(() => post.LocationFrom, () => localityFrom)
-                    //    .JoinAlias(() => localityFrom.LocalityPlace, () => place)
+                    //    .JoinAlias(() => post.LocationFrom, () => locationFrom)
+                    //    .JoinAlias(() => locationFrom.Locality, () => place)
                     //    .SelectList(list => list
                     //    .SelectGroup(() => place.Id)
                     //    .SelectCount(() => place.Id))
@@ -377,8 +377,8 @@ namespace CargoLogistic
 
                     /*
                      QueryOver.Of(() => post)
-                           .JoinAlias(() => post.LocationFrom, () => localityFrom)
-                           .JoinAlias(() => localityFrom.LocalityPlace, () => place)
+                           .JoinAlias(() => post.LocationFrom, () => locationFrom)
+                           .JoinAlias(() => locationFrom.Locality, () => place)
                            .SelectList(list1 => list1
                            .SelectCount(() => place.Country))
                            .Where(Restrictions.EqProperty(Projections.Property(()=>place.Country.Id),
@@ -386,8 +386,8 @@ namespace CargoLogistic
                      */
                     //// cite ori apare Country in postari
                     //var subquery = QueryOver.Of(() => post)
-                    //       .JoinAlias(() => post.LocationFrom, () => localityFrom)
-                    //       .JoinAlias(() => localityFrom.LocalityPlace, () => place)
+                    //       .JoinAlias(() => post.LocationFrom, () => locationFrom)
+                    //       .JoinAlias(() => locationFrom.Locality, () => place)
                     //       .SelectList(list1 => list1
                     //       .SelectCount(() => place.Country))
                     //       .Where(Restrictions.EqProperty(Projections.Property(() => place.Country.Id),

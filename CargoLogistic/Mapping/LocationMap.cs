@@ -8,17 +8,18 @@ using CargoLogistic.Domain.Entities;
 
 namespace CargoLogistic.Domain.Mapping
 {
-    public class LocalityPlaceMap : ClassMap<LocalityPlace>
+    public class LocationMap : ClassMap<Location>
     {
-        public LocalityPlaceMap()
+        public LocationMap()
         {
-            Table("LocalityPlace");
-            DiscriminateSubClassesOnColumn("ClassType").Not.Nullable();
-
+            Table("Location");
+           
             Id(x => x.Id).GeneratedBy.Identity();
-            Map(x => x.Name).Column("Name");
+            Map(x => x.Line1).Column("Line1");
+            Map(x => x.Line2).Column("Line2");
+            Map(x => x.PostCode).Column("PostCode");
             References(x => x.Country).Column("CountryId");
+            References(x => x.Locality).Column("LocalityId");
         }
-
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace CargoLogistic.Domain.Entities
 {
-    public enum TransportType
+    public enum PostTransportType
     {
         Truck = 1,
         Van,

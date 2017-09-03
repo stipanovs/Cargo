@@ -1,17 +1,83 @@
-﻿@using CargoLogistic.Domain.Entities
-@model IEnumerable<Country>
+﻿
+@model CargoLogistic.WebUI.Models.ListCountryLocalityModel
+
+       
 
 @{
-    ViewBag.Title = "List of Country";
+    ViewBag.Title = "List";
+    
 }
 
-@foreach (var c in Model)
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $("#state").prop("disabled", false);
+        
+        var myfunc = function() {
+
+            var options = {};
+            options.url = "/country/getLocality";
+            options.type = "POST";
+            options.data = JSON.stringify({ countryName: $("#countryName").val() });
+            options.dataType = "json";
+            options.contentType = "application/json";
+            options.success = function(states) {
+                $("#state").empty();
+                for (var i = 0; i < states.length; i++) {
+                    $("#state").append("<option>" + states[i] + "</option>");
+                }
+                //$("#state").prop("disabled", false);
+            };
+            options.error = function() { alert("Error retrieving states!"); };
+            $.ajax(options);
+        }
+
+        myfunc();
+        
+        $("#countryName").change(function() {
+            myfunc();
+
+        });
+        
+    });
+   
+
+</script>
+
+@using (Html.BeginForm()) 
 {
-    <div>
-        <h3>@c.Alpha2Code - @c.Name - @c.NumericCode</h3>
-        <p>=============================</p>
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Show Country Localities</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="form-group">
+            @Html.LabelFor(model=>model.Countries, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("countryName", ViewData["countries"] as SelectList,  htmlAttributes: new { @class = "form-control col-md-2" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Select Locality :</label>
+            <div class="col-md-10">
+                <select id="state" class="form-control col-md-2"></select>
+            </div>
+         </div> 
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
+        </div>
     </div>
+
+    
 }
 
-@Html.ActionLink("Home", "Index", "Home")
 
+<div>
+    @Html.ActionLink("Back to List", "List")
+</div>

@@ -13,12 +13,12 @@ namespace CargoLogistic.Domain.Mapping
         public LocalityMap()
         {
             Table("Locality");
-           
+            DiscriminateSubClassesOnColumn("ClassType").Not.Nullable();
+
             Id(x => x.Id).GeneratedBy.Identity();
-            References(x => x.LocalityPlace).Column("LocalyPlaceId");
-            Map(x => x.Line1).Column("Line1");
-            Map(x => x.Line2).Column("Line2");
-            Map(x => x.PostCode).Column("PostCode");
+            Map(x => x.Name).Column("Name");
+            References(x => x.Country).Column("CountryId");
         }
+
     }
 }

@@ -12,9 +12,15 @@ namespace CargoLogistic.Domain.Entities
     {
         public virtual CargoSpecification Specification { get; set; }
        
-        public PostCargo(DateTime dataFrom, DateTime dateTo, Locality locationFrom,
-            Locality locationTo, double price, string additionalInformation, CargoSpecification specification = null, ApplicationUser user = null) 
-            : base(dataFrom, dateTo, locationFrom, locationTo, price, additionalInformation, user)
+        public PostCargo(ApplicationUser user, DateTime dateFrom, DateTime dateTo,
+            Location locationFrom, Location locationTo, PostTransportType postTransportType, double price,
+            bool status, string additionalInformation, CargoSpecification specification = null) 
+            : base(user, dateFrom, dateTo, locationFrom, locationTo, postTransportType, price, status, additionalInformation)
+        {
+            Specification = specification;
+        }
+
+        public PostCargo(CargoSpecification specification)
         {
             Specification = specification;
         }

@@ -12,7 +12,7 @@ namespace CargoLogistic.Domain.Mapping
     {
         public VillageMap()
         {
-            Table("LocalityPlace");
+            Table("Locality");
             DiscriminatorValue(@"Village");
         }
     }

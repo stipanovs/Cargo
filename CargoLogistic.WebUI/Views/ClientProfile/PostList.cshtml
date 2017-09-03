@@ -9,25 +9,37 @@
 
 <div class="col-md-9">
     <table class="table">
-        <thead class="table-bordered">
+        <thead class="table-bordered table-striped">
         <tr>
             <td>Id</td>
-            <td>Date</td>
+            <td>PublicationDate</td>
+            <td>DateFrom</td>
+            <td>DateTo</td>
+            <td>CountryFrom</td>
+            <td>CountryTo</td>
             <td>Price</td>
+            <td>Status</td>
         </tr>
         </thead>
         <tbody>
         @foreach (var p in Model)
         {
-            <tr>
-                <td>@p.Id</td>
-                <td>@p.DateFrom</td>
-                <td>@p.Price</td>
-            </tr>
+        <tr>
+            <td>@p.Id</td>
+            <td>@p.PublicationDate</td>
+            <td>@p.DateFrom.ToShortDateString()</td>
+            <td>@p.DateTo.ToShortDateString()</td>
+            <td>@p.LocationFrom.Country.Alpha2Code</td>
+            <td>@p.LocationTo.Country.Alpha2Code</td>
+            <td>@p.Price</td>
+            <td>@p.Status.ToString()</td>
+        </tr>
         }
         </tbody>
 
     </table>
 </div>
+
+<hr/>
 
 

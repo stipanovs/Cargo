@@ -23,7 +23,7 @@ namespace CargoLogistic.Domain.Entities
             Volume = volume;
         }
 
-        protected CargoSpecification()
+        public CargoSpecification()
         {
             
         }

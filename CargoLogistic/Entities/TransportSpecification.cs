@@ -12,13 +12,13 @@ namespace CargoLogistic.Domain.Entities
     
     public class TransportSpecification : EntityBase, ISpecification
     {
-        public virtual TransportType TransportType { get; set; }
+        public virtual string Description { get; set; }
         public virtual double WeightCapacity { get; set; }
         public virtual double VolumeCapacity { get; set; }
 
-        public TransportSpecification(TransportType type, double weightCapacity, double voluleCapacity)
+        public TransportSpecification(string description, double weightCapacity, double voluleCapacity)
         {
-            TransportType = type;
+            Description = description;
             WeightCapacity = weightCapacity;
             VolumeCapacity = voluleCapacity;
         }

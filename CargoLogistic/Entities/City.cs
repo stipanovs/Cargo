@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CargoLogistic.Domain.Entities
 {
-    public class City : LocalityPlace
+    public class City : Locality
     {
         
         public City(string name, Country country) : base(name, country)
@@ -14,11 +14,7 @@ namespace CargoLogistic.Domain.Entities
            
         }
 
-        public City(string name) : base(name)
-        {
-
-        }
-
+       
         public City()
         {
 

@@ -1,8 +1,10 @@
-﻿using CargoLogistic.Domain.Entities.Users;
+﻿using CargoLogistic.Domain.Entities;
+using CargoLogistic.Domain.Entities.Users;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate.AspNet.Identity;
 using NHibernate.AspNet.Identity.Helpers;
+using NHibernate.Mapping.ByCode;
 using SharpArch.NHibernate;
 
 namespace CargoLogistic.WebUI.App_Start
@@ -11,26 +13,25 @@ namespace CargoLogistic.WebUI.App_Start
     {
         public static void Configure(ISessionStorage storage)
         {
-            var internalTypes = new[] {
-                typeof(ApplicationUser)
-            };
-
-
+            var internalTypes = new[]{ typeof(ApplicationUser)};
+            
 
             var mapping = MappingHelper.GetIdentityMappings(internalTypes);
             //System.Diagnostics.Debug.WriteLine(mapping.AsString());
 
-            string connString = @"Server=.;Database=UserDB;Trusted_Connection=True";
-
-            var config = Fluently.Configure()
-                    .Database(MsSqlConfiguration
-                    .MsSql2012
-                    .ConnectionString(connString))
-                    .Mappings(mappingConfig => mappingConfig.FluentMappings.AddFromAssemblyOf<IdentityUser>())
-                    .BuildConfiguration();
-
-            //NHibernateSession.Init(storage, mapping);
             NHibernateSession.Init(storage, mapping);
+
+            //string connString = @"Server=.;Database=CARGO;Trusted_Connection=True";
+
+            //var config = Fluently.Configure()
+            //        .Database(MsSqlConfiguration
+            //        .MsSql2012
+            //        .ConnectionString(connString))
+            //        .Mappings(mappingConfig => mappingConfig.FluentMappings.AddFromAssemblyOf<IdentityUser>())
+            //        .BuildConfiguration();
+
+
+
 
             //var configuration = NHibernateSession.Init(storage, mapping);
 

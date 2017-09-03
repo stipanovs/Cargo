@@ -11,27 +11,19 @@ namespace CargoLogistic.Domain.Entities.Users
 {
     public class User
     {
-        public virtual string Name { get;  set; }
         public virtual OwnerShipType OwnershipType { get;  set; } 
         public virtual ActivityProfile ActivityProfile { get;  set; }
-        public virtual Person ContactPerson { get; set; }
-        public virtual Country Country { get; set; }
-        public virtual Locality Locality { get; set; }
-        public virtual string Email { get; set; }
+       
+       
         
         private readonly List<UserMessageBox> BoxMessages = new List<UserMessageBox>();
 
         public User(string name, OwnerShipType ownershiptype, ActivityProfile acitvityProfile, Person contactPerson,
-            Country country, City city, Locality locality, string email)
+            Country country, City city, Location location, string email)
         {
-            Name = name;
             OwnershipType = ownershiptype;
             ActivityProfile = acitvityProfile;
-            ContactPerson = contactPerson;
-            Country = country;
-            Locality = locality;
-            Email = email;
-            
+          
         }
 
         public User()
@@ -73,9 +65,6 @@ namespace CargoLogistic.Domain.Entities.Users
             Console.WriteLine();
         }
         #endregion
-        public override string ToString()
-        {
-            return string.Format("{0} {1}", Name);
-        }
+        
     }
 }

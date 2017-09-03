@@ -7,8 +7,8 @@ using CargoLogistic.Domain.Entities;
 
 namespace CargoLogistic.Domain.Repository
 {
-    public interface IPostRepository : IRepository<Post>
+    public interface ILocalityRepository : IRepository<Locality>
     {
-        IEnumerable<Post> GetAllPostUser(string userId);
+        Locality GetByName(string name);
     }
 }

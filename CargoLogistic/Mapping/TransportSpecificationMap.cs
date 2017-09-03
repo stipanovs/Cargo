@@ -13,7 +13,7 @@ namespace CargoLogistic.Domain.Mapping
             Id(x => x.Id).GeneratedBy.Identity();
             Map(x => x.WeightCapacity).Column("WeightCapacity");
             Map(x => x.VolumeCapacity).Column("VolumeCapacity");
-            Map(x => x.TransportType).CustomType<EnumStringType<TransportType>>();
+            Map(x => x.Description).Column("Description");
 
         }
     }

@@ -4,34 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace CargoLogistic.Domain.Entities
 {
-    public class Locality : EntityBase
+    public abstract class Locality : EntityBase
     {
-        
-        public virtual LocalityPlace LocalityPlace { get; set; }
-        public virtual string Line1 { get; set; }
-        public virtual string Line2 { get; set; }
-        public virtual string PostCode { get; set; }
+       
+        public virtual string Name { get; set; }
+        public virtual Country Country { get; set; }
 
-
-        public Locality(LocalityPlace localityPlace, string line1, string line2, string postCode)
+        public Locality(string name, Country country)
         {
-            LocalityPlace = localityPlace;
-            Line1 = line1;
-            Line2 = line2;
-            PostCode = postCode;
+            Name = name;
+            Country = country;
+        }
+
+        public Locality(string name)
+        {
+            Name = name;
+            
         }
 
         protected Locality()
         {
 
-        }
-
-        public override string ToString()
-        {
-            return $"{LocalityPlace.Country.Name}, {LocalityPlace?.Name}, {Line1}, {Line2}, {PostCode}" ;
         }
     }
 }

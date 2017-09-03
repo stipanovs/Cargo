@@ -15,8 +15,10 @@ namespace CargoLogistic.Domain.Entities
         public virtual DateTime PublicationDate { get; set; } 
         public virtual DateTime DateFrom { get;  set; }
         public virtual DateTime DateTo { get;  set; }
-        public virtual Locality LocationFrom { get; } 
-        public virtual Locality LocationTo { get; }
+        public virtual Location LocationFrom { get; } 
+        public virtual Location LocationTo { get; }
+        public virtual PostTransportType PostTransportType { get; set; }
+        public virtual bool Status { get; set; }
 
         private double _price;
         public virtual double Price
@@ -36,18 +38,21 @@ namespace CargoLogistic.Domain.Entities
         }
         public virtual string AdditionalInformation { get; set; } 
            
-        public Post(DateTime dataFrom, DateTime dateTo, 
-            Locality localityFrom, Locality localityTo, double price, string additionalInformation, ApplicationUser user)
+       
+        protected Post(ApplicationUser user, DateTime dateFrom, DateTime dateTo, 
+            Location locationFrom, Location locationTo, PostTransportType postTransportType, double price,
+            bool status, string additionalInformation)
         {
-            DateFrom = dataFrom;
-            DateTo = dateTo;
-            LocationFrom = localityFrom;
-            LocationTo = localityTo;
-            Price = price;
-            AdditionalInformation = additionalInformation;
             User = user;
             PublicationDate = DateTime.Now;
-                 
+            DateFrom = dateFrom;
+            DateTo = dateTo;
+            LocationFrom = locationFrom;
+            LocationTo = locationTo;
+            PostTransportType = postTransportType;
+            Status = status;
+            Price = price;
+            AdditionalInformation = additionalInformation;
         }
 
         protected Post()

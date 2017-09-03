@@ -13,7 +13,9 @@ namespace CargoLogistic.Domain.Mapping
         public ApplicationUserMap()
         {
             Id(x => x.Id).Column("applicationuser_key");
+            Map(x => x.CompanyName).Column("CompanyName");
+            Map(x => x.ContactPerson).Column("ContactPerson");
+            Map(x => x.City).Column("City");
         }
-
     }
 }

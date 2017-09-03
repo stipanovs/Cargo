@@ -10,6 +10,9 @@ namespace CargoLogistic.Domain.Entities.Users
 {
     public class ApplicationUser : IdentityUser
     {
-        //my property
+        public virtual string CompanyName { get; set; }
+        public virtual int City { get; set; }
+        public virtual int ContactPerson { get; set; }
+
     }
 }

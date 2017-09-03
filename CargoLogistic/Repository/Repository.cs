@@ -12,7 +12,7 @@ namespace CargoLogistic.Domain.Repository
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
 
-        private readonly ISession _session = null;
+        private readonly ISession _session;
 
        
         public Repository()
@@ -24,9 +24,6 @@ namespace CargoLogistic.Domain.Repository
             _session = session;
         }
 
-
-
-       
         public void Save(T entity)
         {
             using (var transaction = _session.BeginTransaction())
@@ -54,8 +51,7 @@ namespace CargoLogistic.Domain.Repository
 
         public T GetById(long Id)
         {
-           
-            return _session.Get<T>(Id);
+           return _session.Get<T>(Id);
         }
 
         public T Load(long Id)
