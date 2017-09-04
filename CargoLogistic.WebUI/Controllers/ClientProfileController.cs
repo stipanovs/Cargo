@@ -34,13 +34,11 @@ namespace CargoLogistic.WebUI.Controllers
             _locationRepository = locationRepository;
             _cargospecRepository = cargospecRepository;
         }
-
         
         public ActionResult Index()
         {
             return View();
         }
-
         
         public ActionResult PostList()
         {
@@ -66,11 +64,23 @@ namespace CargoLogistic.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CreatePost(CreatePostCargoDto model)
         {
             
             if (!ModelState.IsValid)
             {
+                //serii
+                var countries = _countryRepository.GetAll()
+                    .Select(c => new SelectListItem
+                    {
+                        Text = c.Name,
+                        Value = c.Name
+                    });
+
+                ViewBag.CountryFrom = countries;
+                ViewBag.CountryTo = countries;
+                //serii
                 return View(model);
             }
 

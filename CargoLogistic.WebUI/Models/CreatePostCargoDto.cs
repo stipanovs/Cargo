@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using CargoLogistic.Domain.Entities;
+using CargoLogistic.WebUI.Models.CustomValidationAttributes;
 
 
 namespace CargoLogistic.WebUI.Models
@@ -30,18 +31,25 @@ namespace CargoLogistic.WebUI.Models
 
         [Required]
         [DataType(DataType.Date)]
+        [DateToGreaterThanDateFrom("DateFrom")]
         public DateTime DateTo { get; set; }
 
         
         [DataType(DataType.Currency)]
+        [PositiveNumber(ErrorMessage = "Price must be positive")]
         public double Price { get; set; }
 
+        [StringLength(200, ErrorMessage = "The length can't exceed 200 symbols")]
         public string AdditionalInfo { get; set; }
 
+        [Required]
+        [StringLength(100, ErrorMessage = "The length can't exceed 100 symbols")]
         public string CargoDescription { get; set; }
-       
+
+        [PositiveNumber(ErrorMessage = "Weight must be positive")]
         public int CargoWeight { get; set; }
 
+        [PositiveNumber(ErrorMessage = "Volume must be positive")]
         public int CargoVolume { get; set; }
 
 

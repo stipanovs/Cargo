@@ -32,7 +32,7 @@
             <td>@p.LocationFrom.Country.Alpha2Code</td>
             <td>@p.LocationTo.Country.Alpha2Code</td>
             <td>@p.Price</td>
-            <td>@p.Status.ToString()</td>
+            <td>@CustomHelpers.DisplayStatus(p.Status)</td>
         </tr>
         }
         </tbody>

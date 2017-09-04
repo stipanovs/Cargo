@@ -28,6 +28,15 @@ namespace CargoLogistic.Domain.Repository
         {
             using (var transaction = _session.BeginTransaction())
             {
+                _session.Save(entity);
+                transaction.Commit();
+            }
+        }
+
+        public void Update(T entity)
+        {
+            using (var transaction = _session.BeginTransaction())
+            {
                 _session.SaveOrUpdate(entity);
                 transaction.Commit();
             }

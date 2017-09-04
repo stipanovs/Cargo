@@ -10,6 +10,7 @@ namespace CargoLogistic.Domain.Repository
         T Load(long Id);
         T GetById(long Id);
         void Save(T entity);
+        void Update(T entity);
         void Delete(T entity);
         IEnumerable<T> GetAll();
         
