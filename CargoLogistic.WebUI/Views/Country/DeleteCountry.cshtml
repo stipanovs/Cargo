@@ -1,0 +1,56 @@
+﻿@model CargoLogistic.WebUI.Models.CountryDetailsModel
+
+@{
+    ViewBag.Title = "DeleteCountry";
+}
+
+<h2>DeleteCountry</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CountryDetailsModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumericCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumericCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Alpha2Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Alpha2Code)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

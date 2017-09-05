@@ -2,9 +2,17 @@
 @{
     ViewBag.Title = "Index";
 }
-<hr/>
-@Html.ActionLink("Change Password","Manage","Account")
-<hr/>
-@Html.ActionLink("User's Post", "PostList", "ClientProfile")
-<hr/>
-@Html.ActionLink("Create Post", "CreatePost", "ClientProfile")
+<div class="row">
+<div class="col-md-3">
+    <hr/>
+    @Html.ActionLink("Change Password","Manage","Account")
+    <hr/>
+    @Html.ActionLink("User's Post", "PostList", "ClientProfile")
+
+</div>
+
+<div class="col-md-9">
+    PARTIAL VIEW
+</div>
+    
+</div>

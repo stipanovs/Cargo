@@ -27,28 +27,6 @@ namespace CargoLogistic.WebUI.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult AddLocality()
-        {
-            ViewBag.Countries = new SelectList(
-                _countryRepository.GetAll().Select(x=>x.Name), "Countries");
-
-            return View();
-        }
-
-        public ActionResult AddLocality(CreateLocalityModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var country = _countryRepository.GetByName(model.Countries);
-            var locality = LocalityFactory.CreateLocality(model.Name, country, model.LocalityType);
-            _localityRepository.Save(locality);
-
-            return Redirect("Index");
-        }
-
+       
     }
 }

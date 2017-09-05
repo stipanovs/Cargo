@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CargoLogistic.WebUI.Models.CountryDetailsModel>
+
+@{
+    ViewBag.Title = "Country List";
+}
+
+
+<div class="row">
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>NumericCode</td>
+            <td>StringCode</td>
+            <td>Localities</td>
+            <td>Edit / Delete</td>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.CountryId</td>
+                <td>@c.Name</td>
+                <td>@c.NumericCode</td>
+                <td>@c.Alpha2Code</td>
+                <td>
+                    @foreach (var l in @c.Localities)
+                    {
+                        <span>@l.Name</span><br/>
+                    }
+                </td>
+                <td>
+                    <span>@Html.ActionLink("Edit", "EditCountry", new {countryId = c.CountryId})</span><br/>
+                    <span>@Html.ActionLink("Delete", "DeleteCountry", new { countryId = c.CountryId })</span>
+                </td>
+                
+            </tr>
+            
+        }
+       
+        </tbody>
+    </table>
+    @Html.ActionLink("Add Locality", "AddLocality", "Country")
+</div>
+
