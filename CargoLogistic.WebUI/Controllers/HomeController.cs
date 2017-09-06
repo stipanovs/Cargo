@@ -16,7 +16,7 @@ namespace CargoLogistic.WebUI.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "My page description";
 
             return View();
         }
@@ -24,7 +24,7 @@ namespace CargoLogistic.WebUI.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contact us: ";
 
             return View();
         }

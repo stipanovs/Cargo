@@ -29,7 +29,7 @@ namespace CargoLogistic.Domain.Entities
             Alpha2Code = isoCode;
         }
 
-        protected Country()
+        public Country()
         {
             _locations = new List<Locality>();
             

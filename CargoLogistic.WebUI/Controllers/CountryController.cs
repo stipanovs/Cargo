@@ -43,7 +43,27 @@ namespace CargoLogistic.WebUI.Controllers
             return Json(locality);
         }
 
-        
+        [HttpGet]
+        public ActionResult CreateCountry()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateCountry(CountryDetailsModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var country = new Country{Name = model.Name, NumericCode = model.NumericCode, Alpha2Code = model.Alpha2Code};
+
+            _countryRepository.Save(country);
+
+            return RedirectToAction("CountryList");
+        }
+
         [HttpGet]
         public ActionResult List()
         {
@@ -140,7 +160,16 @@ namespace CargoLogistic.WebUI.Controllers
                 return HttpNotFound();
             }
 
-            return View();
+            var model = new CountryDetailsModel
+            {
+                CountryId = countryId,
+                Name = country.Name,
+                NumericCode = country.NumericCode,
+                Alpha2Code = country.Alpha2Code
+
+            };
+
+            return View(model);
         }
 
 
@@ -152,7 +181,7 @@ namespace CargoLogistic.WebUI.Controllers
 
             _countryRepository.Delete(country);
 
-            return RedirectToAction("CountryList");
+            return RedirectToAction("CountryList", "Country");
         }
 
 
@@ -177,7 +206,7 @@ namespace CargoLogistic.WebUI.Controllers
             var locality = LocalityFactory.CreateLocality(model.Name, country, model.LocalityType);
             _localityRepository.Save(locality);
 
-            return Redirect("Index");
+            return RedirectToAction("CountryList");
         }
 
         

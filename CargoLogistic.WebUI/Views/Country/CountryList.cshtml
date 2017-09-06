@@ -14,7 +14,7 @@
             <td>NumericCode</td>
             <td>StringCode</td>
             <td>Localities</td>
-            <td>Edit / Delete</td>
+            <td>Edit | Delete</td>
         </tr>
         </thead>
         <tbody>
@@ -22,17 +22,17 @@
         {
             <tr>
                 <td>@c.CountryId</td>
-                <td>@c.Name</td>
+                <td>@c.Name.ToUpper()</td>
                 <td>@c.NumericCode</td>
                 <td>@c.Alpha2Code</td>
                 <td>
                     @foreach (var l in @c.Localities)
                     {
-                        <span>@l.Name</span><br/>
+                        <span>@l.Name.ToUpper()</span><br/>
                     }
                 </td>
                 <td>
-                    <span>@Html.ActionLink("Edit", "EditCountry", new {countryId = c.CountryId})</span><br/>
+                    <span>@Html.ActionLink("Edit", "EditCountry",  new {countryId = c.CountryId})</span><span> | </span>
                     <span>@Html.ActionLink("Delete", "DeleteCountry", new { countryId = c.CountryId })</span>
                 </td>
                 
@@ -42,6 +42,8 @@
        
         </tbody>
     </table>
-    @Html.ActionLink("Add Locality", "AddLocality", "Country")
+    <div class="btn btn-default">@Html.ActionLink("Add Country", "CreateCountry", "Country")</div>
+    <div class="btn btn-default">@Html.ActionLink("Add Locality", "AddLocality", "Country")</div>
+    <div class="btn btn-default">@Html.ActionLink("ADMIN PAGE", "Index", "Admin")</div>
 </div>
 

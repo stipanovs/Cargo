@@ -1,16 +1,11 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Admin Index";
 }
 
-<h2>ADMIN</h2>
+<h2>ADMIN PAGE</h2>
 
-<hr />
-@Html.ActionLink("Role List", "RoleList", "Role")
-<hr />
-@Html.ActionLink("Register Roles", "RegisterRole", "Account")
-<hr />
-@Html.ActionLink("Create new role", "CreateRole", "Role")
+@Html.ActionLink("User Roles", "Index", "Role")
 <hr/>
 @Html.ActionLink("Country", "Index", "Country")
 

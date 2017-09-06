@@ -12,22 +12,22 @@
     <hr />
     @Html.ValidationSummary()
     <div class="form-group">
-        @Html.Label("Select User", new { @class = "col-md-2 control-label" })
+        @Html.Label("Select User", new { @class="control-label col-md-2" }) 
         <div class="col-md-10">
-           @Html.DropDownList("UserName" )
+           @Html.DropDownList("UserName", ViewBag.UserName as SelectList, new { @class="control-label col-md-2" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.Label("Select Role", new { @class = "col-md-2 control-label" })
+        @Html.Label("Select Role", new { @class="control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("RoleName")
+            @Html.DropDownList("RoleName", ViewBag.RoleName as SelectList, new {@class= "control-label col-md-2" })
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="AddRole" />
+            <input type="submit" class="btn btn-primary" value="AddRole" />
         </div>
     </div>
 }

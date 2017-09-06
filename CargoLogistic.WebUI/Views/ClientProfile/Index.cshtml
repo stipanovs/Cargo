@@ -8,7 +8,15 @@
     @Html.ActionLink("Change Password","Manage","Account")
     <hr/>
     @Html.ActionLink("User's Post", "PostList", "ClientProfile")
-
+    <hr/>
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("admin"))
+        {
+            @Html.ActionLink("Admin", "Index", "Admin")
+        }
+    }
+ 
 </div>
 
 <div class="col-md-9">

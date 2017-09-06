@@ -25,7 +25,7 @@
                 for (var i = 0; i < locality.length; i++) {
                     $("#localityFrom").append("<option>" + locality[i] + "</option>");
                 }
-             //$("#state").prop("disabled", false);
+                //$("#state").prop("disabled", false);
             };
             options.error = function() { alert("Error retrieving locality!"); };
             $.ajax(options);
@@ -44,7 +44,7 @@
                 for (var i = 0; i < locality.length; i++) {
                     $("#localityTo").append("<option>" + locality[i] + "</option>");
                 }
-               //$("#state").prop("disabled", false);
+                //$("#state").prop("disabled", false);
             };
             options.error = function() { alert("Error retrieving locality!"); };
             $.ajax(options);
@@ -59,6 +59,9 @@
 
 
 </script>
+
+
+
 
 <h2>CreatePost</h2>
 
@@ -107,7 +110,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateFrom, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateFrom, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.DateFrom, new { htmlAttributes = new { @class = "form-control"} })
                 @Html.ValidationMessageFor(model => model.DateFrom, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -170,3 +173,4 @@
 <div>
     @Html.ActionLink("Back to List", "PostList", "ClientProfile")
 </div>
+
