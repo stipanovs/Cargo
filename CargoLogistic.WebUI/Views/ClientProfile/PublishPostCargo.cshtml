@@ -1,0 +1,40 @@
+﻿@model CargoLogistic.WebUI.Models.PostCargoListDetailsModel
+
+@{
+    ViewBag.Title = "PublishPostCargo";
+}
+
+
+<h3>Are you sure you want to publish this?</h3>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PostId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PublicationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PublicationDate)
+        </dd>
+
+       
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Publish" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "PostList", "ClientProfile")
+        </div>
+    }
+</div>

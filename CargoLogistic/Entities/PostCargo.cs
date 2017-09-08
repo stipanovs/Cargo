@@ -13,7 +13,7 @@ namespace CargoLogistic.Domain.Entities
         public virtual CargoSpecification Specification { get; set; }
        
         public PostCargo(ApplicationUser user, DateTime dateFrom, DateTime dateTo,
-            Location locationFrom, Location locationTo, PostTransportType postTransportType, double price,
+            Location locationFrom, Location locationTo, PostTransportType postTransportType, decimal price,
             bool status, string additionalInformation, CargoSpecification specification = null) 
             : base(user, dateFrom, dateTo, locationFrom, locationTo, postTransportType, price, status, additionalInformation)
         {

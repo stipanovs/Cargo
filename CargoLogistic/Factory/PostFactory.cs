@@ -15,7 +15,7 @@ namespace CargoLogistic.Domain.Factory
     {
         
         public Post CreateNewPost(ApplicationUser user, DateTime dataFrom, DateTime dateTo,
-            Location locationFrom, Location locationTo, string transportType, double price,  string additionalInformation, ISpecification specification)
+            Location locationFrom, Location locationTo, string transportType, decimal price,  string additionalInformation, ISpecification specification)
         {
             Post post = null;
             bool status = false;

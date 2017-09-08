@@ -133,10 +133,10 @@
     <Compile Include="Repository\CountryRepository.cs" />
     <Compile Include="Repository\ICountryRepository.cs" />
     <Compile Include="Repository\ILocalityRepository.cs" />
-    <Compile Include="Repository\IPostRepository.cs" />
+    <Compile Include="Repository\IPostCargoRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\LocalityRepository.cs" />
-    <Compile Include="Repository\PostRepository.cs" />
+    <Compile Include="Repository\PostCargoRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Entities\Users\ActivityProfile.cs" />
     <Compile Include="Entities\Users\OwnerShipType.cs" />

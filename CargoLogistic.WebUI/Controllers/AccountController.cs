@@ -14,8 +14,12 @@ using CargoLogistic.WebUI.Models;
 
 namespace CargoLogistic.WebUI.Controllers
 {
-    
-        [Authorize]
+
+    // https://stackoverflow.com/questions/34244942/nhibernate-aspnet-identity-fluentnhibernate-how-do-i-add-a-custom-object-to-my
+    // var user = UserManager.FindById(User.Identity.GetUserId());
+
+
+    [Authorize]
         public class AccountController : Controller
         {
             public AccountController()

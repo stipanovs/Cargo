@@ -11,7 +11,7 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
-        $("#state").prop("disabled", false);
+        $("#locality").prop("disabled", false);
         
         var myfunc = function() {
 
@@ -21,12 +21,12 @@
             options.data = JSON.stringify({ countryName: $("#countryName").val() });
             options.dataType = "json";
             options.contentType = "application/json";
-            options.success = function(states) {
-                $("#state").empty();
-                for (var i = 0; i < states.length; i++) {
-                    $("#state").append("<option>" + states[i] + "</option>");
+            options.success = function(localities) {
+                $("#locality").empty();
+                for (var i = 0; i < localities.length; i++) {
+                    $("#locality").append("<option>" + localities[i] + "</option>");
                 }
-                //$("#state").prop("disabled", false);
+                //$("#locality").prop("disabled", false);
             };
             options.error = function() { alert("Error retrieving states!"); };
             $.ajax(options);
@@ -63,7 +63,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Select Locality :</label>
             <div class="col-md-10">
-                <select id="state" class="form-control col-md-2"></select>
+                <select id="locality" class="form-control col-md-2"></select>
             </div>
          </div> 
         

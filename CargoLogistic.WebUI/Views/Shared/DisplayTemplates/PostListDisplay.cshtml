@@ -1,0 +1,103 @@
+﻿
+@model IEnumerable<CargoLogistic.WebUI.Models.PostCargoListDetailsModel>
+
+<script>
+    
+    function detailPost(postId) {
+           
+        var options = { "backdrop": "static", keyboard: true };
+        
+        $.ajax({
+            type: "GET",
+            url: '/PostCargo/PostCargoDetails?postId=' + postId,
+           contentType: "application/json; charset=utf-8",
+            //data: { "postId": id },
+            //datatype: "json",
+           success: function (data) {
+               if (data.length == 0) {
+                   data += "Nu sunteti autorizat!";
+                }
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+
+
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+
+    }; 
+
+</script>
+
+
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td>Nr</td>
+        <td>Cod</td>
+        <td>CountryFrom</td>
+        <td>Cod</td>
+        <td>CountryTo</td>
+        <td>DateFrom - DateTo</td>
+        <td>CargoInformation</td>
+        <td>Company</td>
+        <td>PublicationDate</td>
+        <td>Details</td>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>#</td>
+            <td>@p.CountryFrom.Alpha2Code</td>
+            <td><span>@p.CountryFrom.Name</span><br/><span>@p.LocalityFrom</span></td>
+            <td>@p.CountryTo.Alpha2Code</td>
+            <td><span>@p.CountryTo.Name</span><br/><span>@p.LocalityTo</span></td>
+            <td><span>@Html.DisplayFor(m=>p.DateFrom)</span> - <span>@Html.DisplayFor(m => p.DateTo)</span> </td>
+            <td><span>@p.CargoDescription</span><br/><span>@p.CargoWeight tones</span> | <span>@p.CargoVolume m3</span></td>
+            <td>@p.UserCompany</td>
+            <td>@Html.DisplayFor(m=>p.PublicationDate)</td>
+            @*<td>@Html.ActionLink("Details", "PostCargoDetails", "PostCargo", new {postId=p.PostId }, new {@class="btn btn-success", data_toggle = "modal", data_target = "#myModal" })</td>*@
+            <td><a id="anchorDetail" onclick="detailPost(@p.PostId)" href="" class="btn btn-primary"  data-toggle="modal" data-target="#myModal" >Detail</a>
+            
+            </td>
+           
+        </tr>
+       
+    }
+    </tbody>
+  
+</table>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Post Cargo Details</h4>
+            </div>
+            <div class="modal-body">
+                <div id='myModalContent'></div>  
+                @*@Html.Action("PostCargoDetails", "PostCargo")*@
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                @*<button type="button" class="btn btn-success">Submit</button>*@
+            </div>
+        </div>
+
+    </div>
+</div>
+
+ 
+
+

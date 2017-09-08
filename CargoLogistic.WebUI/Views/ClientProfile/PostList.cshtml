@@ -1,5 +1,4 @@
-﻿@using CargoLogistic.Domain.Entities
-@model IEnumerable<Post>
+﻿@model IEnumerable<CargoLogistic.WebUI.Models.PostCargoListDetailsModel>
 
 @{
     ViewBag.Title = "Post List";
@@ -26,20 +25,30 @@
             <td>CountryTo</td>
             <td>Price</td>
             <td>Status</td>
+            <td>Actions</td>
         </tr>
         </thead>
         <tbody>
         @foreach (var p in Model)
         {
         <tr>
-            <td>@p.Id</td>
-            <td>@p.PublicationDate</td>
-            <td>@p.DateFrom.ToShortDateString()</td>
-            <td>@p.DateTo.ToShortDateString()</td>
-            <td>@p.LocationFrom.Country.Alpha2Code</td>
-            <td>@p.LocationTo.Country.Alpha2Code</td>
-            <td>@p.Price</td>
+            <td>@p.PostId</td>
+            <td>@Html.DisplayFor(m => p.PublicationDate)</td>
+            <td>@Html.DisplayFor(m=>p.DateFrom)</td>
+            <td>@Html.DisplayFor(m => p.DateTo)</td>
+            <td>@p.CountryFrom.Alpha2Code</td>
+            <td>@p.CountryTo.Alpha2Code</td>
+            <td>@Html.DisplayFor(m=>p.Price)</td>
             <td>@CustomHelpers.DisplayStatus(p.Status)</td>
+            <td>
+                @if(p.Status)
+                {
+                @Html.ActionLink("UnPublish", "UnPublishPostCargo", new {postId = p.PostId})
+                }
+                else{
+                @Html.ActionLink("Publish", "PublishPostCargo", new {postId = p.PostId})
+                }
+            </td>
         </tr>
         }
         </tbody>

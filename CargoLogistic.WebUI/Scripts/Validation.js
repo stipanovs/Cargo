@@ -1,4 +1,6 @@
-﻿$(function() {
+﻿$(document).ready(function () {
+
+$(function () {
 
     $.validator.addMethod(
         "positivenumber", function(value, element) {
@@ -22,4 +24,6 @@
         "Please serii ...");
     $.validator.unobtrusive.adapters.addBool("positivenumber");
 
-}(jQuery));
+    });
+
+});

@@ -104,15 +104,14 @@ namespace CargoLogistic.WebUI.Controllers
             foreach (var c in countries)
             {
                 listCountries.Add( new CountryDetailsModel
-                    {
-                        CountryId = c.Id,
-                        Name = c.Name,
-                        NumericCode = c.NumericCode,
-                        Alpha2Code = c.Alpha2Code,
-                        Localities = c.Locations
-                     }
-                    );
-                
+                {
+                    CountryId = c.Id,
+                    Name = c.Name,
+                    NumericCode = c.NumericCode,
+                    Alpha2Code = c.Alpha2Code,
+                    Localities = c.Locations
+                    }
+                );
             }
            
             return View(listCountries);

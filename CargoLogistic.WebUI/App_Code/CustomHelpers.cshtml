@@ -1,12 +1,24 @@
 ﻿@helper DisplayStatus(bool status)
 {
-if (status)
-{
-        <span>Active</span>
-}
-else
-{
-        <span>Not Active</span>
+    if (status)
+    {
+        <span style="color:cornflowerblue"><b>Published</b></span>
+    }
+    else
+    {
+            <span style="color: brown">Unpublished</span>
+    }
+
 }
 
+@helper DisplayPublish(bool status)
+{
+    if (status)
+    {
+        //
+    }
+    else
+    {
+        //
+    }
 }

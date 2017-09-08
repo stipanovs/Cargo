@@ -10,6 +10,7 @@ using CargoLogistic.Domain.Repository;
 using CargoLogistic.WebUI.Models;
 using Microsoft.AspNet.Identity;
 using NHibernate.AspNet.Identity;
+using NHibernate.Type;
 using SharpArch.NHibernate;
 
 namespace CargoLogistic.WebUI.Controllers
@@ -17,18 +18,18 @@ namespace CargoLogistic.WebUI.Controllers
     [Authorize]
     public class ClientProfileController : Controller
     {
-        private IPostRepository _postRepository;
+        private IPostCargoRepository _postCargoRepository;
         private ICountryRepository _countryRepository;
         private ILocalityRepository _localityRepository;
         private IRepository<Location> _locationRepository;
         private IRepository<CargoSpecification> _cargospecRepository;
 
 
-        public ClientProfileController(IPostRepository postRepo, 
+        public ClientProfileController(IPostCargoRepository postCargoRepo, 
             ICountryRepository countryRepository, ILocalityRepository localityRepository,
             IRepository<Location> locationRepository, IRepository<CargoSpecification> cargospecRepository)
         {
-            _postRepository = postRepo;
+            _postCargoRepository = postCargoRepo;
             _countryRepository = countryRepository;
             _localityRepository = localityRepository;
             _locationRepository = locationRepository;
@@ -42,9 +43,26 @@ namespace CargoLogistic.WebUI.Controllers
         
         public ActionResult PostList()
         {
-            var posts = _postRepository.GetAllPostUser(User.Identity.GetUserId());
+            var posts = _postCargoRepository.GetAllPostCargoUser(User.Identity.GetUserId());
+            var model = new List<PostCargoListDetailsModel>();
+            foreach (var p in posts)
+            {
+                model.Add(
+                    new PostCargoListDetailsModel
+                    {
+                        PostId = p.Id,
+                        PublicationDate = p.PublicationDate,
+                        DateFrom = p.DateFrom,
+                        DateTo = p.DateTo,
+                        CountryFrom = p.LocationFrom.Country,
+                        CountryTo = p.LocationTo.Country,
+                        Price = p.Price,
+                        Status = p.Status
+                    });
+            }
             
-            return View(posts);
+
+           return View(model.OrderByDescending(x=>x.PublicationDate));
         }
 
         [HttpGet]
@@ -65,7 +83,7 @@ namespace CargoLogistic.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePost(CreatePostCargoDto model)
+        public ActionResult CreatePost(CreatePostCargoModel model)
         {
             
             if (!ModelState.IsValid)
@@ -114,7 +132,7 @@ namespace CargoLogistic.WebUI.Controllers
             _locationRepository.Save(locationFrom);
             _locationRepository.Save(locationTo);
             _cargospecRepository.Save(cargoSpecification);
-            _postRepository.Save(post);
+            _postCargoRepository.Save(post as PostCargo);
 
             
             return Redirect("PostList");
@@ -128,5 +146,86 @@ namespace CargoLogistic.WebUI.Controllers
             return Json(locality);
         }
 
+        [HttpGet]
+        public ActionResult PublishPostCargo(long postId)
+        {
+            var post = _postCargoRepository.GetById(postId);
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (post.Status)
+            {
+                return RedirectToAction("PostList", "ClientProfile");
+            }
+
+            var model = new PostCargoListDetailsModel
+            {
+                PostId = post.Id,
+                PublicationDate = post.PublicationDate,
+                CountryFrom = post.LocationFrom.Country,
+                CountryTo = post.LocationTo.Country
+            };
+
+            return View(model);
+        }
+
+        [HttpPost, ActionName("PublishPostCargo")]
+        [ValidateAntiForgeryToken]
+        public ActionResult PublishConfirmedPostCargo(long postId)
+        {
+            var post = _postCargoRepository.GetById(postId);
+            if (post.Status)
+            {
+                return RedirectToAction("PostList", "ClientProfile");
+            }
+            
+            post.Status = true;
+            _postCargoRepository.Update(post);
+            
+            return RedirectToAction("PostList", "ClientProfile");
+        }
+
+        [HttpGet]
+        public ActionResult UnPublishPostCargo(long postId)
+        {
+            var post = _postCargoRepository.GetById(postId);
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (!post.Status)
+            {
+                return RedirectToAction("PostList", "ClientProfile");
+            }
+
+            var model = new PostCargoListDetailsModel
+            {
+                PostId = post.Id,
+                PublicationDate = post.PublicationDate,
+                CountryFrom = post.LocationFrom.Country,
+                CountryTo = post.LocationTo.Country
+            };
+
+            return View(model);
+        }
+
+        [HttpPost, ActionName("UnPublishPostCargo")]
+        [ValidateAntiForgeryToken]
+        public ActionResult UnPublishConfirmedPostCargo(long postId)
+        {
+            var post = _postCargoRepository.GetById(postId);
+            if (!post.Status)
+            {
+                return RedirectToAction("PostList", "ClientProfile");
+            }
+
+            post.Status = false;
+            _postCargoRepository.Update(post);
+
+            return RedirectToAction("PostList", "ClientProfile");
+        }
     }
 }

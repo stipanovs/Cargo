@@ -36,7 +36,7 @@ namespace CargoLogistic.WebUI.Infrastructure
             // add here
             //kernel.Bind<IRepository<Country>>().To<Repository<Country>>();
             kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>));
-            kernel.Bind(typeof(IPostRepository)).To(typeof(PostRepository));
+            kernel.Bind(typeof(IPostCargoRepository)).To(typeof(PostCargoRepository));
             kernel.Bind(typeof(ICountryRepository)).To(typeof(CountryRepository));
             kernel.Bind(typeof(ILocalityRepository)).To(typeof(LocalityRepository));
 

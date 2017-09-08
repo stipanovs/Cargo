@@ -17,7 +17,7 @@ namespace CargoLogistic.WebUI.Models
         [PositiveNumber]
         public int NumericCode { get; set; }
         [Required]
-        [StringLength(3)]
+        [StringLength(2)]
         public string Alpha2Code { get; set; }
         public IEnumerable<Locality> Localities { get; set; }
 

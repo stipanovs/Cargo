@@ -20,8 +20,8 @@ namespace CargoLogistic.Domain.Entities
         public virtual PostTransportType PostTransportType { get; set; }
         public virtual bool Status { get; set; }
 
-        private double _price;
-        public virtual double Price
+        private decimal _price;
+        public virtual decimal Price
         {
             get { return _price; }
             set
@@ -40,7 +40,7 @@ namespace CargoLogistic.Domain.Entities
            
        
         protected Post(ApplicationUser user, DateTime dateFrom, DateTime dateTo, 
-            Location locationFrom, Location locationTo, PostTransportType postTransportType, double price,
+            Location locationFrom, Location locationTo, PostTransportType postTransportType, decimal price,
             bool status, string additionalInformation)
         {
             User = user;

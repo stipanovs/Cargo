@@ -8,11 +8,11 @@ namespace CargoLogistic.Domain.Events
 {
     public class PostPriceChangedEventArgs : EventArgs
     {
-        public double LastPrice { get; private set; }
-        public double NewPrice { get; private set; }
+        public decimal LastPrice { get; private set; }
+        public decimal NewPrice { get; private set; }
         public long ID { get; private set; }
 
-        public PostPriceChangedEventArgs(double lastPrice, double newPrice, long id)
+        public PostPriceChangedEventArgs(decimal lastPrice, decimal newPrice, long id)
         {
             LastPrice = lastPrice;
             NewPrice = newPrice;
