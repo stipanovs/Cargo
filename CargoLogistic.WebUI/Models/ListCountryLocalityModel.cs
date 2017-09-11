@@ -4,7 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CargoLogistic.Domain.Entities;
+using CargoLogistic.DAL.Entities;
 
 namespace CargoLogistic.WebUI.Models
 {

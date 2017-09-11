@@ -5,7 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using CargoLogistic.Domain.Entities.Users;
+using CargoLogistic.DAL.Entities.Users;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using NHibernate.AspNet.Identity;

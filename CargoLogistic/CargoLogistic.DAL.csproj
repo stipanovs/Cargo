@@ -131,10 +131,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CountryRepository.cs" />
-    <Compile Include="Repository\ICountryRepository.cs" />
-    <Compile Include="Repository\ILocalityRepository.cs" />
-    <Compile Include="Repository\IPostCargoRepository.cs" />
-    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Interfaces\ICountryRepository.cs" />
+    <Compile Include="Interfaces\ILocalityRepository.cs" />
+    <Compile Include="Interfaces\IPostCargoRepository.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Repository\LocalityRepository.cs" />
     <Compile Include="Repository\PostCargoRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
@@ -148,8 +148,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dto\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

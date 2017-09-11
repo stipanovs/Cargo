@@ -1,15 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DataBaseProject", "DataBaseProject\DataBaseProject.sqlproj", "{A5EAED6B-52AF-4324-8A52-393608C65AE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoLogistic.Domain", "CargoLogistic\CargoLogistic.Domain.csproj", "{2592AA9F-E8C7-48DC-9E62-51EF8DD084C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoLogistic.DAL", "CargoLogistic\CargoLogistic.DAL.csproj", "{2592AA9F-E8C7-48DC-9E62-51EF8DD084C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoLogistic.WebUI", "CargoLogistic.WebUI\CargoLogistic.WebUI.csproj", "{C1413CE7-E863-49E6-9953-7E175DD1C3FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoLogistic.WebUI.Tests", "CargoLogistic.WebUI.Tests\CargoLogistic.WebUI.Tests.csproj", "{A410FF70-5347-4D15-882D-B74972325E6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CargoLogistic.BLL", "CargoLogistic.BLL\CargoLogistic.BLL.csproj", "{95EF5D7A-774B-4BAB-B33D-DEA1EA03F0CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +36,10 @@ Global
 		{A410FF70-5347-4D15-882D-B74972325E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A410FF70-5347-4D15-882D-B74972325E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A410FF70-5347-4D15-882D-B74972325E6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95EF5D7A-774B-4BAB-B33D-DEA1EA03F0CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95EF5D7A-774B-4BAB-B33D-DEA1EA03F0CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95EF5D7A-774B-4BAB-B33D-DEA1EA03F0CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95EF5D7A-774B-4BAB-B33D-DEA1EA03F0CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CargoLogistic.Domain.Entities;
+using CargoLogistic.DAL.Entities;
 
-namespace CargoLogistic.Domain.Repository
+namespace CargoLogistic.DAL.Interfaces
 {
     public interface IRepository<T> where T: EntityBase
     {

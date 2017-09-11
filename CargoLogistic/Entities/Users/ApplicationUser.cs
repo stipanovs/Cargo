@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NHibernate;
 using NHibernate.AspNet.Identity;
 
-namespace CargoLogistic.Domain.Entities.Users
+namespace CargoLogistic.DAL.Entities.Users
 {
     public class ApplicationUser : IdentityUser
     {

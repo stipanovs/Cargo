@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CargoLogistic.DAL.Entities;
 using FluentNHibernate.Mapping;
-using CargoLogistic.Domain.Entities;
 
-namespace CargoLogistic.Domain
+namespace CargoLogistic.DAL
 {
     public class CityMap : SubclassMap<City>
     {

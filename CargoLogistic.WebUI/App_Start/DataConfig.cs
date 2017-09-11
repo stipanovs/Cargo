@@ -1,5 +1,5 @@
-﻿using CargoLogistic.Domain.Entities;
-using CargoLogistic.Domain.Entities.Users;
+﻿using CargoLogistic.DAL.Entities;
+using CargoLogistic.DAL.Entities.Users;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate.AspNet.Identity;

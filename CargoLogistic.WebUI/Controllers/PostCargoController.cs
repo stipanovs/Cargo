@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CargoLogistic.Domain.Repository;
+using CargoLogistic.DAL.Interfaces;
+using CargoLogistic.DAL.Repository;
 using CargoLogistic.WebUI.Models;
 
 namespace CargoLogistic.WebUI.Controllers
@@ -50,6 +51,9 @@ namespace CargoLogistic.WebUI.Controllers
         public ActionResult PostCargoDetails(long postId)
         {
             var post = _postCargoRepository.GetById(postId);
+            post.NumberOfViews += 1;
+            _postCargoRepository.Update(post);
+
             var model = new PostCargoListDetailsModel
             {
                 CountryFrom = post.LocationFrom.Country,

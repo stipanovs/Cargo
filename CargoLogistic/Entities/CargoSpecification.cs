@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CargoLogistic.Domain.Entities.SpecificationType;
+using CargoLogistic.DAL.Entities;
+using CargoLogistic.DAL.Entities.SpecificationType;
 
 
 
-namespace CargoLogistic.Domain.Entities
+namespace CargoLogistic.DAL.Entities
 {
     
     public class CargoSpecification : EntityBase , ISpecification

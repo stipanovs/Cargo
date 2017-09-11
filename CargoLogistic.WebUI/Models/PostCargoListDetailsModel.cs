@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using CargoLogistic.Domain.Entities;
+using CargoLogistic.DAL.Entities;
 using CargoLogistic.WebUI.Models.CustomValidationAttributes;
 
 namespace CargoLogistic.WebUI.Models
@@ -55,9 +55,12 @@ namespace CargoLogistic.WebUI.Models
 
         [PositiveNumber(ErrorMessage = "Volume must be positive")]
         public double CargoVolume { get; set; }
+
         public string UserCompany { get; set; }
 
         public bool Status { get; set; }
+
+        public int NumberOfViews { get; set; }
 
 
     }

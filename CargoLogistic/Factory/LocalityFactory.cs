@@ -4,9 +4,9 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CargoLogistic.Domain.Entities;
+using CargoLogistic.DAL.Entities;
 
-namespace CargoLogistic.Domain.Factory
+namespace CargoLogistic.DAL.Factory
 {
     public class LocalityFactory
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Scripting.Interpreter;
 
 
-namespace CargoLogistic.Domain.Entities
+namespace CargoLogistic.DAL.Entities
 {
     public class Location : EntityBase
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CargoLogistic.Domain.Entities.SpecificationType
+namespace CargoLogistic.DAL.Entities.SpecificationType
 {
     public interface ISpecification 
     {

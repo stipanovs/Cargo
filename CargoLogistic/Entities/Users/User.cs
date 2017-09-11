@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using CargoLogistic.Domain.Events;
+using CargoLogistic.DAL.Events;
 
 
-namespace CargoLogistic.Domain.Entities.Users
+namespace CargoLogistic.DAL.Entities.Users
 {
     public class User
     {

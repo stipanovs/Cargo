@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CargoLogistic.Domain.Entities.Users;
+using CargoLogistic.DAL.Entities.Users;
 using FluentNHibernate.Mapping;
 
-namespace CargoLogistic.Domain.Mapping
+namespace CargoLogistic.DAL.Mapping
 {
     public  class ApplicationUserMap : ClassMap<ApplicationUser>
     {

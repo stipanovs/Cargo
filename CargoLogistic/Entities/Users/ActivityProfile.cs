@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CargoLogistic.Domain.Entities.Users
+namespace CargoLogistic.DAL.Entities.Users
 {
     public enum ActivityProfile
     {

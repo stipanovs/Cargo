@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CargoLogistic.Domain.Entities.Users;
-using CargoLogistic.Domain.Events;
+using CargoLogistic.DAL.Entities.Users;
+using CargoLogistic.DAL.Events;
 
 
-namespace CargoLogistic.Domain.Entities
+namespace CargoLogistic.DAL.Entities
 {
     public abstract class Post : EntityBase
     {
@@ -15,10 +15,11 @@ namespace CargoLogistic.Domain.Entities
         public virtual DateTime PublicationDate { get; set; } 
         public virtual DateTime DateFrom { get;  set; }
         public virtual DateTime DateTo { get;  set; }
-        public virtual Location LocationFrom { get; } 
-        public virtual Location LocationTo { get; }
+        public virtual Location LocationFrom { get; set; } 
+        public virtual Location LocationTo { get; set; }
         public virtual PostTransportType PostTransportType { get; set; }
         public virtual bool Status { get; set; }
+        public virtual int NumberOfViews { get; set; }
 
         private decimal _price;
         public virtual decimal Price

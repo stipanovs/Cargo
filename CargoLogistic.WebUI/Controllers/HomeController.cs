@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CargoLogistic.Domain.Entities;
-using CargoLogistic.Domain.Repository;
+using CargoLogistic.DAL.Entities;
+using CargoLogistic.DAL.Repository;
 using CargoLogistic.WebUI.Models;
 
 namespace CargoLogistic.WebUI.Controllers

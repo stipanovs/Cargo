@@ -4,9 +4,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
-using CargoLogistic.Domain.Entities;
+using CargoLogistic.DAL.Interfaces;
 using Ninject;
-using CargoLogistic.Domain.Repository;
+using CargoLogistic.DAL.Repository;
 
 
 namespace CargoLogistic.WebUI.Infrastructure

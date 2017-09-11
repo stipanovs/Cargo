@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using CargoLogistic.Domain.Entities;
+using CargoLogistic.DAL.Entities;
 using CargoLogistic.WebUI.Models.CustomValidationAttributes;
 
 

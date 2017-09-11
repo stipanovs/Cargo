@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CargoLogistic.Domain.Entities;
+using CargoLogistic.DAL.Entities;
+using CargoLogistic.DAL.Repository;
 
-namespace CargoLogistic.Domain.Repository
+namespace CargoLogistic.DAL.Interfaces
 {
     public interface ILocalityRepository : IRepository<Locality>
     {

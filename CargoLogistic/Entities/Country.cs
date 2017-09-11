@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CargoLogistic.Domain.Entities
+namespace CargoLogistic.DAL.Entities
 {
     public class Country : EntityBase
     {

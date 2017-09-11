@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CargoLogistic.Domain.Entities;
-using CargoLogistic.Domain.Factory;
-using CargoLogistic.Domain.Repository;
-using CargoLogistic.WebUI.Models;
+using CargoLogistic.DAL.Entities;
+using CargoLogistic.DAL.Interfaces;
+using CargoLogistic.DAL.Repository;
+
 
 namespace CargoLogistic.WebUI.Controllers
 {

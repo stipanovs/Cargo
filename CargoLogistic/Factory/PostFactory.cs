@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CargoLogistic.Domain.Entities;
-using CargoLogistic.Domain.Entities.SpecificationType;
-using CargoLogistic.Domain.Entities.Users;
+using CargoLogistic.DAL.Entities;
+using CargoLogistic.DAL.Entities.SpecificationType;
+using CargoLogistic.DAL.Entities.Users;
 
 
-namespace CargoLogistic.Domain.Factory
+namespace CargoLogistic.DAL.Factory
 {
     
     public class PostFactory

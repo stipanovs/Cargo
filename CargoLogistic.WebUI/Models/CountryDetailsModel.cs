@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using CargoLogistic.Domain.Entities;
+using CargoLogistic.DAL.Entities;
 using CargoLogistic.WebUI.Models.CustomValidationAttributes;
 
 namespace CargoLogistic.WebUI.Models

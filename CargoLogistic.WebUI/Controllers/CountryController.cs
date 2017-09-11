@@ -5,9 +5,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using CargoLogistic.Domain.Entities;
-using CargoLogistic.Domain.Factory;
-using CargoLogistic.Domain.Repository;
+using CargoLogistic.DAL.Entities;
+using CargoLogistic.DAL.Factory;
+using CargoLogistic.DAL.Interfaces;
+using CargoLogistic.DAL.Repository;
 using CargoLogistic.WebUI.Models;
 
 namespace CargoLogistic.WebUI.Controllers

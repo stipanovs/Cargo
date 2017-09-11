@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 using NHibernate.AspNet.Identity;
 //using SharpArch.NHibernate;
 
-namespace CargoLogistic.Domain.Entities.Users
+namespace CargoLogistic.DAL.Entities.Users
 {
     public class ApplicationManager : UserManager<ApplicationUser>
     {

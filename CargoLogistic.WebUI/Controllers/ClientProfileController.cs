@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CargoLogistic.Domain.Entities;
-using CargoLogistic.Domain.Entities.Users;
-using CargoLogistic.Domain.Factory;
-using CargoLogistic.Domain.Repository;
+using System.Web.Mvc.Html;
+using CargoLogistic.DAL.Entities;
+using CargoLogistic.DAL.Entities.Users;
+using CargoLogistic.DAL.Factory;
+using CargoLogistic.DAL.Interfaces;
+using CargoLogistic.DAL.Repository;
 using CargoLogistic.WebUI.Models;
 using Microsoft.AspNet.Identity;
 using NHibernate.AspNet.Identity;
-using NHibernate.Type;
 using SharpArch.NHibernate;
 
 namespace CargoLogistic.WebUI.Controllers
@@ -56,8 +57,15 @@ namespace CargoLogistic.WebUI.Controllers
                         DateTo = p.DateTo,
                         CountryFrom = p.LocationFrom.Country,
                         CountryTo = p.LocationTo.Country,
+                        LocalityFrom = p.LocationFrom.Locality.Name,
+                        LocalityTo = p.LocationTo.Locality.Name,
                         Price = p.Price,
-                        Status = p.Status
+                        CargoDescription = p.Specification.Description,
+                        CargoWeight = p.Specification.Weight,
+                        CargoVolume = p.Specification.Volume,
+                        Status = p.Status,
+                        NumberOfViews = p.NumberOfViews
+                        
                     });
             }
             
@@ -93,7 +101,8 @@ namespace CargoLogistic.WebUI.Controllers
                     .Select(c => new SelectListItem
                     {
                         Text = c.Name,
-                        Value = c.Name
+                        Value = c.Name,
+                        
                     });
 
                 ViewBag.CountryFrom = countries;
@@ -168,7 +177,7 @@ namespace CargoLogistic.WebUI.Controllers
                 CountryTo = post.LocationTo.Country
             };
 
-            return View(model);
+            return PartialView(model); 
         }
 
         [HttpPost, ActionName("PublishPostCargo")]
@@ -182,6 +191,7 @@ namespace CargoLogistic.WebUI.Controllers
             }
             
             post.Status = true;
+            post.PublicationDate = DateTime.Now;
             _postCargoRepository.Update(post);
             
             return RedirectToAction("PostList", "ClientProfile");
@@ -209,7 +219,7 @@ namespace CargoLogistic.WebUI.Controllers
                 CountryTo = post.LocationTo.Country
             };
 
-            return View(model);
+            return PartialView(model);
         }
 
         [HttpPost, ActionName("UnPublishPostCargo")]
@@ -227,5 +237,198 @@ namespace CargoLogistic.WebUI.Controllers
 
             return RedirectToAction("PostList", "ClientProfile");
         }
+
+        [HttpGet]
+        public ActionResult EditPostCargo(long postId)
+        {
+            var post = _postCargoRepository.GetById(postId);
+            var model = new EditPostCargoModel()
+            {
+                PostId = post.Id,
+                PublicationDate = post.PublicationDate,
+                CountryFrom =  post.LocationFrom.Country.Name,
+                LocalityFrom = post.LocationFrom.Locality.Name,
+                CountryTo = post.LocationTo.Country.Name,
+                LocalityTo = post.LocationTo.Locality.Name,
+                AdditionalInfo = post.AdditionalInformation,
+                CargoDescription = post.Specification.Description,
+                CargoVolume = post.Specification.Volume,
+                CargoWeight = post.Specification.Weight,
+                DateFrom = post.DateFrom,
+                DateTo = post.DateTo,
+                PostTransportTypes = post.PostTransportType.ToString(),
+                Price = post.Price,
+                Status = post.Status
+            };
+
+            var countriesFrom = _countryRepository.GetAll()
+                .Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Name,
+                    Selected = c.Name == model.CountryFrom
+                });
+            
+
+            var countriesTo = _countryRepository.GetAll()
+                .Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Name,
+                    Selected = c.Name == model.CountryTo
+                });
+            
+
+            var localityFrom = _localityRepository.GetAll()
+                .Where(l=>l.Country.Name == model.CountryFrom)
+                .Select(l => new SelectListItem
+                {
+                    Text = l.Name,
+                    Value = l.Name,
+                    Selected = l.Name == model.LocalityFrom
+                });
+
+            var localityTo = _localityRepository.GetAll()
+                .Where(l => l.Country.Name == model.CountryTo)
+                .Select(l => new SelectListItem
+                {
+                    Text = l.Name,
+                    Value = l.Name,
+                    Selected = l.Name == model.LocalityTo
+                });
+
+           
+            ViewBag.CountryFrom = countriesFrom;
+            ViewBag.LocalityFrom = localityFrom;
+            ViewBag.CountryTo = countriesTo;
+            ViewBag.LocalityTo = localityTo;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditPostCargo(EditPostCargoModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var countriesFrom = _countryRepository.GetAll()
+                    .Select(c => new SelectListItem
+                    {
+                        Text = c.Name,
+                        Value = c.Name,
+                        Selected = c.Name == model.CountryFrom
+                    });
+
+
+                var countriesTo = _countryRepository.GetAll()
+                    .Select(c => new SelectListItem
+                    {
+                        Text = c.Name,
+                        Value = c.Name,
+                        Selected = c.Name == model.CountryTo
+                    });
+
+
+                var localityFrom = _localityRepository.GetAll()
+                    .Where(l => l.Country.Name == model.CountryFrom)
+                    .Select(l => new SelectListItem
+                    {
+                        Text = l.Name,
+                        Value = l.Name,
+                        Selected = l.Name == model.LocalityFrom
+                    });
+
+                var localityTo = _localityRepository.GetAll()
+                    .Where(l => l.Country.Name == model.CountryTo)
+                    .Select(l => new SelectListItem
+                    {
+                        Text = l.Name,
+                        Value = l.Name,
+                        Selected = l.Name == model.LocalityTo
+                    });
+
+                ViewBag.CountryFrom = countriesFrom;
+                ViewBag.LocalityFrom = localityFrom;
+                ViewBag.CountryTo = countriesTo;
+                ViewBag.LocalityTo = localityTo;
+
+                return View(model);
+            }
+
+            var post = _postCargoRepository.GetById(model.PostId);
+
+            Location locationFrom = post.LocationFrom;
+            locationFrom.Country = _countryRepository.GetByName(model.CountryFrom);
+            locationFrom.Locality = _localityRepository.GetByName(model.LocalityFrom);
+
+            Location locationTo = post.LocationTo;
+
+            locationTo.Country = _countryRepository.GetByName(model.CountryTo);
+            locationTo.Locality = _localityRepository.GetByName(model.LocalityTo);
+
+            CargoSpecification cargoSpecification = post.Specification;
+
+            cargoSpecification.Description = model.CargoDescription;
+            cargoSpecification.Weight = model.CargoWeight;
+            cargoSpecification.Volume = model.CargoVolume;
+
+            post.LocationTo = locationTo;
+            post.LocationFrom = locationFrom;
+            post.Specification = cargoSpecification;
+            post.Price = model.Price;
+            PostTransportType postTransportType;
+            Enum.TryParse(model.PostTransportTypes, true, out postTransportType);
+            post.PostTransportType = postTransportType;
+            post.DateFrom = model.DateFrom;
+            post.DateTo = model.DateTo;
+            post.AdditionalInformation = model.AdditionalInfo;
+
+            _postCargoRepository.Update(post);
+
+           return RedirectToAction("PostList");
+        }
+
+        public ActionResult DeletePostCargo(long postId)
+        {
+            var post = _postCargoRepository.GetById(postId);
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+
+            var model = new EditPostCargoModel()
+            {
+                PostId = post.Id,
+                PublicationDate = post.PublicationDate,
+                CountryFrom = post.LocationFrom.Country.Name,
+                LocalityFrom = post.LocationFrom.Locality.Name,
+                CountryTo = post.LocationTo.Country.Name,
+                LocalityTo = post.LocationTo.Locality.Name,
+                AdditionalInfo = post.AdditionalInformation,
+                CargoDescription = post.Specification.Description,
+                CargoVolume = post.Specification.Volume,
+                CargoWeight = post.Specification.Weight,
+                DateFrom = post.DateFrom,
+                DateTo = post.DateTo,
+                PostTransportTypes = post.PostTransportType.ToString(),
+                Price = post.Price,
+                Status = post.Status
+            };
+
+            return View(model);
+        }
+
+        [HttpPost, ActionName("DeletePostCargo")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmedPostCargo(long postId)
+        {
+            var post = _postCargoRepository.GetById(postId);
+            _postCargoRepository.Delete(post);
+            
+            return RedirectToAction("PostList", "ClientProfile");
+        }
+
+
+
     }
 }

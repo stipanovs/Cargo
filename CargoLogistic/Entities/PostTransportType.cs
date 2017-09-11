@@ -1,4 +1,4 @@
-﻿namespace CargoLogistic.Domain.Entities
+﻿namespace CargoLogistic.DAL.Entities
 {
     public enum PostTransportType
     {

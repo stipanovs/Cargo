@@ -1,8 +1,8 @@
-﻿using CargoLogistic.Domain.Entities;
+﻿using CargoLogistic.DAL.Entities;
 using FluentNHibernate.Mapping;
 
 
-namespace CargoLogistic.Domain.Mapping
+namespace CargoLogistic.DAL.Mapping
 {
     public class CargoSpecificationMap : ClassMap<CargoSpecification>
     {
