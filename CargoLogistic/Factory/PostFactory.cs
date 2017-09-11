@@ -13,7 +13,6 @@ namespace CargoLogistic.DAL.Factory
     
     public class PostFactory
     {
-        
         public Post CreateNewPost(ApplicationUser user, DateTime dataFrom, DateTime dateTo,
             Location locationFrom, Location locationTo, string transportType, decimal price,  string additionalInformation, ISpecification specification)
         {
@@ -22,7 +21,6 @@ namespace CargoLogistic.DAL.Factory
             PostTransportType postTransportType;
             Enum.TryParse(transportType, true, out postTransportType);
             
-
             if (specification is CargoSpecification)
             {
                 post = new PostCargo(user, dataFrom, dateTo, locationFrom, locationTo, postTransportType, price, status, additionalInformation, (CargoSpecification)specification);

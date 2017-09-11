@@ -13,8 +13,7 @@ namespace CargoLogistic.DAL.Factory
         public static Locality CreateLocality(string name, Country country, string localityType)
         {
             LocalityType type;
-
-           Enum.TryParse(localityType, true, out type);
+            Enum.TryParse(localityType, true, out type);
 
             if(type == LocalityType.Village)
                 return new Village(name, country);

@@ -12,10 +12,7 @@ namespace CargoLogistic.DAL.Repository
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
-
         private readonly ISession _session;
-
-       
         public Repository()
         {
             _session = NHibernateProvider.GetSession();
@@ -50,7 +47,6 @@ namespace CargoLogistic.DAL.Repository
                 _session.Delete(entity);
                 transaction.Commit();
             }
-
         }
 
        public IEnumerable<T> GetAll()
@@ -68,12 +64,10 @@ namespace CargoLogistic.DAL.Repository
         {
             return _session.Load<T>(Id);
         }
-
         
         public void Dispose()
         {
             _session.Close();
         }
-
     }
 }

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2592AA9F-E8C7-48DC-9E62-51EF8DD084C4}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CargoLogistic.Domain</RootNamespace>
-    <AssemblyName>CargoLogistic.Domain</AssemblyName>
+    <RootNamespace>CargoLogistic.DAL</RootNamespace>
+    <AssemblyName>CargoLogistic.DAL</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

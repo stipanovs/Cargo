@@ -13,7 +13,5 @@ namespace CargoLogistic.WebUI.Controllers
         {
             return View();
         }
-
-       
     }
 }

@@ -14,12 +14,8 @@ namespace CargoLogistic.NHibernateInitialize
 {
     public static class NHibernateProvider
     {
-        
         private const string connString = @"Server=.;Database=CARGO;Trusted_Connection=True";
-
-
         private static ISessionFactory _sessionFactory;
-
         public static ISession GetSession()
         {
             if (_sessionFactory == null)
