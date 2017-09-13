@@ -37,9 +37,9 @@ namespace CargoLogistic.WebUI.Models
         [DateToGreaterThanDateFrom("DateFrom")]
         public DateTime DateTo { get; set; }
 
-
+        [Required]
         [DataType(DataType.Currency)]
-        [PositiveNumber(ErrorMessage = "Price must be positive")]
+        [PositiveNumber(ErrorMessage = "Price must be positive SERVER")]
         [UIHint("Currency")]
         public decimal Price { get; set; }
 

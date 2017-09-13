@@ -34,9 +34,9 @@ namespace CargoLogistic.WebUI.Models
         [DateToGreaterThanDateFrom("DateFrom")]
         public DateTime DateTo { get; set; }
 
-        
-        [DataType(DataType.Currency)]
-        [PositiveNumber(ErrorMessage = "Price must be positive")]
+        [Required]
+        //[DataType(DataType.Currency)]
+        [PositiveNumber(ErrorMessage = "Price must be positive(Server)")]
         public decimal Price { get; set; }
 
         [StringLength(200, ErrorMessage = "The length can't exceed 200 symbols")]

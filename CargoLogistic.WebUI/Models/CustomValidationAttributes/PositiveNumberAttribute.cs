@@ -7,14 +7,14 @@ using System.Web.Mvc;
 
 namespace CargoLogistic.WebUI.Models.CustomValidationAttributes
 {
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = true)]
     public sealed class PositiveNumberAttribute : ValidationAttribute, IClientValidatable
     {
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
             var mvr = new ModelClientValidationRule
             {
-                ErrorMessage = "This field require a positive number",
+                ErrorMessage = "This field require a positive number CLIENT",
                 ValidationType = "positivenumber"
             };
             return new[] {mvr};

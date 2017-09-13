@@ -25,8 +25,7 @@
         <dd>
             @Html.DisplayFor(model => model.PublicationDate)
         </dd>
-
-       
+        
     </dl>
 
     @using (Html.BeginForm()) {
@@ -34,7 +33,9 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Publish" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "PostList", "ClientProfile")
+            @Html.ActionLink("Back to List", "PostCargoList", "ClientProfile")
         </div>
     }
 </div>
+
+

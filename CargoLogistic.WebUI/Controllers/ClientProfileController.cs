@@ -42,7 +42,7 @@ namespace CargoLogistic.WebUI.Controllers
             return View();
         }
         
-        public ActionResult PostList()
+        public ActionResult PostCargoList()
         {
             var posts = _postCargoRepository.GetAllPostCargoUser(User.Identity.GetUserId());
             var model = new List<PostCargoListDetailsModel>();
@@ -96,8 +96,7 @@ namespace CargoLogistic.WebUI.Controllers
             
             if (!ModelState.IsValid)
             {
-                //serii
-                var countries = _countryRepository.GetAll()
+               var countries = _countryRepository.GetAll()
                     .Select(c => new SelectListItem
                     {
                         Text = c.Name,
@@ -107,7 +106,7 @@ namespace CargoLogistic.WebUI.Controllers
 
                 ViewBag.CountryFrom = countries;
                 ViewBag.CountryTo = countries;
-                //serii
+               
                 return View(model);
             }
 
@@ -142,9 +141,8 @@ namespace CargoLogistic.WebUI.Controllers
             _locationRepository.Save(locationTo);
             _cargospecRepository.Save(cargoSpecification);
             _postCargoRepository.Save(post as PostCargo);
-
             
-            return Redirect("PostList");
+            return Redirect("PostCargoList");
         }
 
         public JsonResult GetLocality(string countryName)
@@ -166,7 +164,7 @@ namespace CargoLogistic.WebUI.Controllers
 
             if (post.Status)
             {
-                return RedirectToAction("PostList", "ClientProfile");
+                return RedirectToAction("PostCargoList", "ClientProfile");
             }
 
             var model = new PostCargoListDetailsModel
@@ -187,14 +185,14 @@ namespace CargoLogistic.WebUI.Controllers
             var post = _postCargoRepository.GetById(postId);
             if (post.Status)
             {
-                return RedirectToAction("PostList", "ClientProfile");
+                return RedirectToAction("PostCargoList", "ClientProfile");
             }
             
             post.Status = true;
             post.PublicationDate = DateTime.Now;
             _postCargoRepository.Update(post);
             
-            return RedirectToAction("PostList", "ClientProfile");
+            return RedirectToAction("PostCargoList", "ClientProfile");
         }
 
         [HttpGet]
@@ -208,7 +206,7 @@ namespace CargoLogistic.WebUI.Controllers
 
             if (!post.Status)
             {
-                return RedirectToAction("PostList", "ClientProfile");
+                return RedirectToAction("PostCargoList", "ClientProfile");
             }
 
             var model = new PostCargoListDetailsModel
@@ -229,13 +227,13 @@ namespace CargoLogistic.WebUI.Controllers
             var post = _postCargoRepository.GetById(postId);
             if (!post.Status)
             {
-                return RedirectToAction("PostList", "ClientProfile");
+                return RedirectToAction("PostCargoList", "ClientProfile");
             }
 
             post.Status = false;
             _postCargoRepository.Update(post);
 
-            return RedirectToAction("PostList", "ClientProfile");
+            return RedirectToAction("PostCargoList", "ClientProfile");
         }
 
         [HttpGet]
@@ -385,7 +383,7 @@ namespace CargoLogistic.WebUI.Controllers
 
             _postCargoRepository.Update(post);
 
-           return RedirectToAction("PostList");
+           return RedirectToAction("PostCargoList");
         }
 
         public ActionResult DeletePostCargo(long postId)
@@ -425,7 +423,7 @@ namespace CargoLogistic.WebUI.Controllers
             var post = _postCargoRepository.GetById(postId);
             _postCargoRepository.Delete(post);
             
-            return RedirectToAction("PostList", "ClientProfile");
+            return RedirectToAction("PostCargoList", "ClientProfile");
         }
 
 

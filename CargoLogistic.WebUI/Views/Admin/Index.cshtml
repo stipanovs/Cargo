@@ -5,10 +5,32 @@
 
 <h2>ADMIN PAGE</h2>
 
-@Html.ActionLink("User Roles", "Index", "Role")
-<hr/>
-@Html.ActionLink("Country", "Index", "Country")
+<div id="admin-menu">
+    <ul>
+        <li><a href="#tabs-1">User Roles</a></li>
+        <li><a href="#tabs-2">Country Details</a></li>
+        <li><a href="#tabs-3">User CRUD</a></li>
+    </ul>
+    <div id="tabs-1">
+        <hr />
+        @Html.ActionLink("Role List", "RoleList", "Role")
+        <hr />
+        @Html.ActionLink("Register Roles", "RegisterRole", "Account")
+        <hr />
+    </div>
+    <div id="tabs-2">
+        <hr />
+        @Html.ActionLink("Prosta experiment", "List", "Country")
+        <hr />
+        @Html.ActionLink("Country List","CountryList","Country")
 
+    </div>
+    <div id="tabs-3">
+        <p>User Details</p>
+        <p>User Delete </p>
+        <p>User Update</p>
+    </div>
+</div>
 
 
 

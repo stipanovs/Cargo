@@ -19,7 +19,7 @@ namespace CargoLogistic.BLL.Infrastructure
         public override void Load()
         {
             Bind(typeof(IRepository<>)).To(typeof(Repository<>)).WithConstructorArgument(connectionString);
-            Bind(typeof(ICountryRepository)).To(typeof(CountryRepository)).WithConstructorArgument(connectionString);
+            //Bind(typeof(ICountryRepository)).To(typeof(CountryRepository)).WithConstructorArgument(connectionString);
         }
     }
 }
