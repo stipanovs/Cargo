@@ -9,7 +9,7 @@ using CargoLogistic.WebUI.App_Start;
 
 namespace CargoLogistic.WebUI
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {

@@ -9,6 +9,7 @@ using CargoLogistic.DAL.Entities.Users;
 using CargoLogistic.DAL.Factory;
 using CargoLogistic.DAL.Interfaces;
 using CargoLogistic.DAL.Repository;
+using CargoLogistic.WebUI.Filters;
 using CargoLogistic.WebUI.Models;
 using Microsoft.AspNet.Identity;
 using NHibernate.AspNet.Identity;
@@ -74,6 +75,7 @@ namespace CargoLogistic.WebUI.Controllers
         }
 
         [HttpGet]
+        //[AjaxOrChildActionOnly]
         public ActionResult CreatePost()
         {
             var countries = _countryRepository.GetAll()
