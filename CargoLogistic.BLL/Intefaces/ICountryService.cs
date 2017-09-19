@@ -11,8 +11,8 @@ namespace CargoLogistic.BLL.Intefaces
     {
         CountryDTO GetById(long Id);
         CountryDTO GetByname(string name);
-        void CreateCountry(CountryDTO countryDto);
+        void CreateCountry(CountryCreateDto countryDto);
         IEnumerable<CountryDTO> CountryDtos();
-        IEnumerable<LocalityDTO> LocalitiesDtos(CountryDTO countryDto);
+        IEnumerable<LocalityDto> LocalitiesDtos(CountryDTO countryDto);
     }
 }

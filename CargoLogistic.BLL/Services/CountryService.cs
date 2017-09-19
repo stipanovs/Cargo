@@ -10,6 +10,7 @@ using CargoLogistic.BLL.Intefaces;
 using CargoLogistic.DAL.Entities;
 using CargoLogistic.DAL.Interfaces;
 
+
 namespace CargoLogistic.BLL.Services
 {
     public class CountryService : ICountryService
@@ -24,15 +25,13 @@ namespace CargoLogistic.BLL.Services
         }
         public IEnumerable<CountryDTO> CountryDtos()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<Country, CountryDTO>());
-            Mapper.Map<IEnumerable<Country>, List<CountryDTO>>(_countryRepository.GetAll());
-            return Mapper.Map<IEnumerable<Country>, List<CountryDTO>>(_countryRepository.GetAll());
+            var countries = Mapper.Map<IEnumerable<Country>, List<CountryDTO>>(_countryRepository.GetAll());
+            return countries;
         }
 
-        public void CreateCountry(CountryDTO countryDto)
+        public void CreateCountry(CountryCreateDto countryDto)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<CountryDTO, Country>());
-            var country = Mapper.Map<CountryDTO, Country>(countryDto);
+            var country = Mapper.Map<CountryCreateDto, Country>(countryDto);
             _countryRepository.Save(country);
         }
 
@@ -56,11 +55,11 @@ namespace CargoLogistic.BLL.Services
             return Mapper.Map<Country, CountryDTO>(country);
         }
 
-        public IEnumerable<LocalityDTO> LocalitiesDtos(CountryDTO countryDto)
+        public IEnumerable<LocalityDto> LocalitiesDtos(CountryDTO countryDto)
         {
             var country = _countryRepository.GetById(countryDto.Id);
-            Mapper.Initialize(cfg => cfg.CreateMap<IEnumerable<Locality>, IEnumerable<LocalityDTO>>());
-            var localitiesDtos = Mapper.Map<IEnumerable<Locality>, IEnumerable<LocalityDTO>>(country.Locations);
+            Mapper.Initialize(cfg => cfg.CreateMap<IEnumerable<Locality>, IEnumerable<LocalityDto>>());
+            var localitiesDtos = Mapper.Map<IEnumerable<Locality>, IEnumerable<LocalityDto>>(country.Localities);
             return localitiesDtos;
         }
     }

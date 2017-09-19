@@ -7,6 +7,7 @@ using CargoLogistic.DAL.Entities;
 using CargoLogistic.DAL.Interfaces;
 using CargoLogistic.DAL.Repository;
 using CargoLogistic.WebUI.Models;
+using CargoLogistic.BLL.Intefaces;
 
 namespace CargoLogistic.WebUI.Controllers
 {
@@ -14,11 +15,14 @@ namespace CargoLogistic.WebUI.Controllers
     {
         private ICountryRepository _countryRepository;
         private IPostCargoRepository _postCargoRepository;
+       
 
-        public HomeController(ICountryRepository countryRepository, IPostCargoRepository postCargoRepository)
+
+        public HomeController(ICountryRepository countryRepository, IPostCargoRepository postCargoRepository, ICountryService countryService)
         {
             _countryRepository = countryRepository;
             _postCargoRepository = postCargoRepository;
+            
         }
         
         public ActionResult Index()
@@ -82,6 +86,7 @@ namespace CargoLogistic.WebUI.Controllers
 
             return PartialView("DisplayTemplates/PostListDisplay", modelList);
         }
+        
 
     }
 }

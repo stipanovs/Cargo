@@ -46,8 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\CountryCreateDto.cs" />
     <Compile Include="DTO\CountryDTO.cs" />
     <Compile Include="DTO\LocalityDTO.cs" />
+    <Compile Include="Infrastructure\AutoMappingConfig.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Infrastructure\ValidationException .cs" />
     <Compile Include="Intefaces\ICountryService.cs" />
@@ -55,14 +57,6 @@
     <Compile Include="Services\CountryService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CargoLogistic.WebUI.Tests\CargoLogistic.WebUI.Tests.csproj">
-      <Project>{a410ff70-5347-4d15-882d-b74972325e6e}</Project>
-      <Name>CargoLogistic.WebUI.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CargoLogistic.WebUI\CargoLogistic.WebUI.csproj">
-      <Project>{c1413ce7-e863-49e6-9953-7e175dd1c3fa}</Project>
-      <Name>CargoLogistic.WebUI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CargoLogistic\CargoLogistic.DAL.csproj">
       <Project>{2592aa9f-e8c7-48dc-9e62-51ef8dd084c4}</Project>
       <Name>CargoLogistic.DAL</Name>

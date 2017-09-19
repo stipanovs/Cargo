@@ -210,13 +210,13 @@ namespace CargoLogistic
             //        //Country country = null;
             //        //City city = null;
             //        //var query = session.QueryOver(() => country)
-            //        //    .JoinAlias(c => c.Locations, () => city)
+            //        //    .JoinAlias(c => c.Localities, () => city)
             //        //    .List<Country>();
 
             //        //Country country = null;
             //        //City city = null;
             //        //var query = session.QueryOver(() => country)
-            //        //    .JoinAlias(c => c.Locations, () => city)
+            //        //    .JoinAlias(c => c.Localities, () => city)
             //        //    .TransformUsing(Transformers.DistinctRootEntity)
             //        //    .List<Country>();
 
@@ -313,7 +313,7 @@ namespace CargoLogistic
             //        //City city = null;
 
             //        //var query = session.QueryOver(() => country)
-            //        //    .JoinAlias(c => c.Locations, () => city)
+            //        //    .JoinAlias(c => c.Localities, () => city)
             //        //    .Where(() => country.NumericCode < 650)
             //        //    .TransformUsing(Transformers.DistinctRootEntity)
             //        //    .List<Country>();

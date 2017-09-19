@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
+using CargoLogistic.BLL.Intefaces;
+using CargoLogistic.BLL.Services;
 using CargoLogistic.DAL.Interfaces;
 using Ninject;
 using CargoLogistic.DAL.Repository;
@@ -39,6 +41,8 @@ namespace CargoLogistic.WebUI.Infrastructure
             kernel.Bind(typeof(IPostCargoRepository)).To(typeof(PostCargoRepository));
             kernel.Bind(typeof(ICountryRepository)).To(typeof(CountryRepository));
             kernel.Bind(typeof(ILocalityRepository)).To(typeof(LocalityRepository));
+            kernel.Bind(typeof(ICountryService)).To(typeof(CountryService));
+            
 
         }
     }

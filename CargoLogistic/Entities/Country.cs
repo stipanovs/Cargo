@@ -15,8 +15,8 @@ namespace CargoLogistic.DAL.Entities
         public virtual int NumericCode { get;  set; }
         public virtual string Alpha2Code { get; set; }
 
-        private readonly List<Locality> _locations;
-        public virtual IEnumerable<Locality> Locations { get { return _locations; } }
+        private readonly List<Locality> _localities;
+        public virtual IEnumerable<Locality> Localities { get { return _localities; } }
 
         public Country(string name, int digitalCode = 0, string isoCode = "")
         {
@@ -31,7 +31,7 @@ namespace CargoLogistic.DAL.Entities
 
         public Country()
         {
-            _locations = new List<Locality>();
+            _localities = new List<Locality>();
             
         }
         

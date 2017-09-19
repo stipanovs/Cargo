@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CargoLogistic.WebUI.Models.CountryDetailsModel>
+﻿@model IEnumerable<CargoLogistic.WebUI.Models.CountryListDetailsModel>
 
 @{
     ViewBag.Title = "Country List";
@@ -18,22 +18,22 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var c in Model)
+        @foreach (var country in Model)
         {
             <tr>
-                <td>@c.CountryId</td>
-                <td>@c.Name.ToUpper()</td>
-                <td>@c.NumericCode</td>
-                <td>@c.Alpha2Code</td>
+                <td>@country.Id</td>
+                <td>@country.Name.ToUpper()</td>
+                <td>@country.NumericCode</td>
+                <td>@country.Alpha2Code</td>
                 <td>
-                    @foreach (var l in @c.Localities)
+                    @foreach (var locality in @country.Localities)
                     {
-                        <span>@l.Name.ToUpper()</span><br/>
+                        <span>@locality.Name.ToUpper()</span><br/>
                     }
                 </td>
                 <td>
-                    <span>@Html.ActionLink("Edit", "EditCountry",  new {countryId = c.CountryId})</span><span> | </span>
-                    <span>@Html.ActionLink("Delete", "DeleteCountry", new { countryId = c.CountryId })</span>
+                    <span>@Html.ActionLink("Edit", "EditCountry",  new {countryId = country.Id})</span><span> | </span>
+                    <span>@Html.ActionLink("Delete", "DeleteCountry", new { countryId = country.Id })</span>
                 </td>
                 
             </tr>

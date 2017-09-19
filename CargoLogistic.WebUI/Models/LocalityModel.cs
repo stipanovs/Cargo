@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace CargoLogistic.BLL.DTO
+namespace CargoLogistic.WebUI.Models
 {
-    public class LocalityDto
+    public class LocalityModel
     {
         public long Id { get; set; }
         public string Name { get; set; }

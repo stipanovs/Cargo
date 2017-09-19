@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CargoLogistic.BLL.DTO
 {
-    public class LocalityDto
+    public class CountryCreateDto
     {
-        public long Id { get; set; }
         public string Name { get; set; }
-        public string Country { get; set; }
+        public int NumericCode { get; set; }
+        public string Alpha2Code { get; set; }
     }
 }

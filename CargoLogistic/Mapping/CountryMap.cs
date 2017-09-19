@@ -19,7 +19,7 @@ namespace CargoLogistic.DAL.Mapping
             Map(x => x.NumericCode);
             Map(x => x.Alpha2Code);
 
-            HasMany(x => x.Locations).Cascade.All().Inverse();
+            HasMany(x => x.Localities).Cascade.All().Inverse();
         }
        
 

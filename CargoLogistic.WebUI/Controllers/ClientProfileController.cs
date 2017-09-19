@@ -150,7 +150,7 @@ namespace CargoLogistic.WebUI.Controllers
         public JsonResult GetLocality(string countryName)
         {
             var country = _countryRepository.GetByName(countryName);
-            var locality = country.Locations.Select(x => x.Name).ToList();
+            var locality = country.Localities.Select(x => x.Name).ToList();
 
             return Json(locality);
         }

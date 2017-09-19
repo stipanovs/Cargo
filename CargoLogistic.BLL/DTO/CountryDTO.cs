@@ -7,12 +7,9 @@ using CargoLogistic.DAL.Entities;
 
 namespace CargoLogistic.BLL.DTO
 {
-    public class CountryDTO
+    public class CountryDTO : CountryCreateDto
     {
         public long Id { get; set; }
-        public string Name { get; set; }
-        public int NumericCode { get; set; }
-        public string Alpha2Code { get; set; }
-        public IEnumerable<LocalityDTO> Locations { get; set; }
+        public IEnumerable<LocalityDto> Localities { get; set; }
     }
 }

@@ -37,6 +37,7 @@ namespace CargoLogistic.WebUI.Models
         [Required]
         //[DataType(DataType.Currency)]
         [PositiveNumber(ErrorMessage = "Price must be positive(Server)")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Price must be a Number.")]
         public decimal Price { get; set; }
 
         [StringLength(200, ErrorMessage = "The length can't exceed 200 symbols")]

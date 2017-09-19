@@ -216,6 +216,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DataConfig.cs" />
+    <Compile Include="App_Start\AutomapperProfile.cs" />
     <Compile Include="App_Start\NHibernateProfilerBootstrapper.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -236,12 +237,13 @@
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CountryDetailsModel.cs" />
+    <Compile Include="Models\CountryListDtailsModel.cs" />
     <Compile Include="Models\CreateLocalityModel.cs" />
     <Compile Include="Models\CreatePostCargoModel.cs" />
     <Compile Include="Models\CustomValidationAttributes\DateToGreaterThenDateFrom.cs" />
     <Compile Include="Models\EditPostCargoModel.cs" />
-    <Compile Include="Models\ListCountryLocalityModel.cs" />
     <Compile Include="Models\CustomValidationAttributes\PositiveNumberAttribute.cs" />
+    <Compile Include="Models\LocalityModel.cs" />
     <Compile Include="Models\PostCargoListDetailsModel.cs" />
     <Compile Include="Models\SearchPostCargoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -274,9 +276,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Country\AddLocality.cshtml" />
-    <Content Include="Views\Country\List.cshtml" />
     <Content Include="Views\Locality\Index.cshtml" />
-    <Content Include="Views\Country\ShowLocalities.cshtml" />
     <Content Include="Views\ClientProfile\CreatePost.cshtml" />
     <Content Include="Views\Country\CountryList.cshtml" />
     <Content Include="Views\Country\Index.cshtml" />
@@ -306,13 +306,17 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CargoLogistic.BLL\CargoLogistic.BLL.csproj">
+      <Project>{95ef5d7a-774b-4bab-b33d-dea1ea03f0cd}</Project>
+      <Name>CargoLogistic.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CargoLogistic\CargoLogistic.DAL.csproj">
       <Project>{2592aa9f-e8c7-48dc-9e62-51ef8dd084c4}</Project>
       <Name>CargoLogistic.DAL</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
