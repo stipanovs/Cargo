@@ -12,10 +12,13 @@
     </ul>
     <div id="tabs-1">
         @Html.ActionLink("My Loads Post List", "PostCargoList", "ClientProfile")
-        @Html.ActionLink("Create Postcargo", "CreatePost")
+        <br/>
+        @Html.ActionLink("Create Postcargo", "CreatePost", "ClientProfile")
     </div>
     <div id="tabs-2">
-        <a href="#">User's Truck Post</a>
+        @Html.ActionLink("My Truck Post List", "PostTransportList", "ClientProfile")
+        <hr />
+        @Html.ActionLink("Create Postcargo", "CreatePostTransport", "ClientProfile")
     </div>
     <div id="tabs-3">
         @Html.ActionLink("Change Password", "Manage", "Account")

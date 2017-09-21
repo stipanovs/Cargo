@@ -1,18 +1,59 @@
-﻿@model CargoLogistic.WebUI.Models.PostCargoListDetailsModel
-
-<p>PostCargo Detail</p>
-
-@Model.CountryFrom.Name - @Model.CountryTo.Name
-<br/>
-@Model.LocalityFrom - @Model.LocalityTo
-<br/>
-@Model.DateFrom - @Model.DateTo
-<br />
-
-@Model.Price
-<hr/>
-@Model.UserCompany
-
+﻿@model CargoLogistic.WebUI.Models.PostCargoDetailsModel
 
     
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td><b>Detail</b></td>
+            <td><b>Detail Description</b></td>
+        </tr>
+        <tr>
+            <td>Publication Date</td>
+            <td>@Model.PublicationDate</td>
+        </tr>
+        <tr>
+            <td>Date From - Date To</td>
+            <td>@Model.DateFrom.ToShortDateString() - @Model.DateTo.ToShortDateString()</td>
+        </tr>
+        <tr>
+        <tr>
+            <td>Country From - Country To</td>
+            <td>@Model.CountryFrom - @Model.CountryTo</td>
+        </tr>
+        <tr>
+            <td>Locality From - Locality To</td>
+            <td>@Model.LocalityFrom - @Model.LocalityTo</td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td>@Model.Price</td>
+        </tr>
+        <tr>
+            <td>Cargo Description</td>
+            <td>@Model.CargoDescription<br /> @Model.CargoWeight tones | @Model.CargoVolume m3</td>
+        </tr>
+        <tr>
+            <td>Transport Type</td>
+            <td>@Model.PostTransportTypes</td>
+        </tr>
+        <tr>
+            <td>Additional Information</td>
+            <td>@Model.AdditionalInfo</td>
+        </tr>
+        <tr>
+            <td>Company Name</td>
+            <td>@Model.UserCompany</td>
+        </tr>
+        <tr>
+            <td>Company PhoneNumber</td>
+            <td>@Model.UserPhone</td>
+        </tr>
+        <tr>
+            <td>Company Email</td>
+            <td>@Model.UserEmail</td>
+        </tr>
 
+    </tbody>
+</table>
+
+<p>Total number of Views: <b>@Model.NumberOfViews</b></p>

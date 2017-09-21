@@ -1,0 +1,66 @@
+﻿@model CargoLogistic.WebUI.Models.SearchPostCargoModel
+
+@{
+    ViewBag.Title = "PostCargo Search";
+}
+<div class="container">
+    <h2>PostCargo Search</h2>
+
+    <div class="row">
+        <div class="col-md-3">
+        
+            @using (Ajax.BeginForm("PostCargoSearch", "PostCargo", new AjaxOptions {HttpMethod = "POST", UpdateTargetId = "divList"}))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    <hr/>
+                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CountryFrom, htmlAttributes: new {@class = ""})
+                        <br/>
+                        <div class="">
+                            @Html.DropDownList("CountryFrom", (SelectList) ViewBag.CountryFrom, new {@class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.CountryFrom, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+                
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CountryTo, htmlAttributes: new { @class = "" })
+                        <br />
+                        <div class="">
+                            @Html.DropDownList("CountryTo", (SelectList)ViewBag.CountryFrom, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CountryTo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="">
+                            <input type="submit" value="Search »" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-9" id="divList">
+            <h3>How this Work?</h3>
+            <h3>Select CountryFrom and CountryTo press Search!</h3>
+        </div>
+
+    
+
+    </div>
+    <div class="row">
+        @Html.ActionLink("Back to Home", "Index", "Home", null, new {@class="btn btn-default"})
+        @Html.ActionLink("Display All CargoPost", "ListAllPost", "PostCargo", null, new { @class = "btn btn-default" })
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

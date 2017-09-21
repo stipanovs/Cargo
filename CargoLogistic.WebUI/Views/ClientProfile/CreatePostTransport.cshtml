@@ -1,0 +1,183 @@
+﻿@using CargoLogistic.DAL.Entities
+@model CargoLogistic.WebUI.Models.CreatePostTransportModel
+
+@{
+    ViewBag.Title = "CreatePostTransport";
+    var urlGetLocality = Url.Action("GetLocality", "ClientProfile");
+}
+
+<h2>CreatePostTransport</h2>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#localityFrom").prop("disabled", false);
+        $("#localityTo").prop("disabled", false);
+        var url = $("#urlGetLocality").val();
+
+        var LocalityFrom = function () {
+            var options = {};
+            options.url = url;
+            options.type = "POST";
+            options.data = JSON.stringify({ countryName: $("#CountryFrom").val() });
+            options.dataType = "json";
+            options.contentType = "application/json";
+            options.success = function (locality) {
+                $("#localityFrom").empty();
+
+                $("#localityFrom").attr('name', 'LocalityFrom');
+                for (var i = 0; i < locality.length; i++) {
+                    $("#localityFrom").append("<option>" + locality[i] + "</option>");
+                }
+            };
+            options.error = function() { alert("Error retrieving locality!"); };
+            $.ajax(options);
+        }
+
+        var LocalityTo = function () {
+            var options = {};
+            options.url = url;
+            options.type = "POST";
+            options.data = JSON.stringify({ countryName: $("#CountryTo").val() });
+            options.dataType = "json";
+            options.contentType = "application/json";
+            options.success = function (locality) {
+                $("#localityTo").empty();
+                $("#localityTo").attr('name', 'LocalityTo');
+                for (var i = 0; i < locality.length; i++) {
+                    $("#localityTo").append("<option>" + locality[i] + "</option>");
+                }
+            };
+            options.error = function() { alert("Error retrieving locality!"); };
+            $.ajax(options);
+        }
+
+        LocalityFrom();
+        LocalityTo();
+
+        $("#CountryFrom").change(function () { LocalityFrom();});
+        $("#CountryTo").change(function () { LocalityTo(); });
+
+
+    });
+
+</script>
+
+@Html.Hidden("urlGetLocality", urlGetLocality)
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.CountryFrom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CountryFrom", ViewBag.CountryFrom as SelectList , 
+                    htmlAttributes: new { @class = "form-control col-md-2" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.LocalityFrom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="localityFrom" class="form-control col-md-2"></select>
+            </div>
+        </div> 
+        <div class="form-group">
+            @Html.LabelFor(model => model.CountryTo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CountryTo", ViewBag.CountryFrom as SelectList,
+                    htmlAttributes: new { @class = "form-control col-md-2" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.LocalityTo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="localityTo" class="form-control col-md-2"></select>
+            </div>
+        </div> 
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.PostTransportTypes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("PostTransportTypes", EnumHelper.GetSelectList(typeof(PostTransportType)), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PostTransportTypes, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateFrom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateFrom, new { htmlAttributes = new { @class = "form-control", type="date" } })
+                @Html.ValidationMessageFor(model => model.DateFrom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateTo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateTo, new { htmlAttributes = new { @class = "form-control", type="date" } })
+                @Html.ValidationMessageFor(model => model.DateTo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AdditionalInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AdditionalInfo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AdditionalInfo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TransportDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TransportDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TransportDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WeightCapacity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WeightCapacity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.WeightCapacity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.VolumeCapacity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.VolumeCapacity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.VolumeCapacity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create Transport Post" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "PostTransportList", "ClientProfile")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

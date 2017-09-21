@@ -12,7 +12,7 @@ namespace CargoLogistic.WebUI.Models
         public string Name { get; set; }
 
         [Display(Name = "Select Country")]
-        public string Countries { get; set; }
+        public string Country { get; set; }
 
         [Required]
         [Display(Name = "Select Locality Type")]

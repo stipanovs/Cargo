@@ -111,6 +111,7 @@
     <Compile Include="Factory\PostFactory.cs" />
     <Compile Include="Entities\PostTransport.cs" />
     <Compile Include="Entities\TransportSpecification.cs" />
+    <Compile Include="Interfaces\IPostTransportRepository.cs" />
     <Compile Include="Mapping\ApplicationUserMap.cs" />
     <Compile Include="Mapping\CargoSpecificationMap.cs" />
     <Compile Include="Mapping\CityMap.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Repository\LocalityRepository.cs" />
     <Compile Include="Repository\PostCargoRepository.cs" />
+    <Compile Include="Repository\PostTransportRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Entities\Users\ActivityProfile.cs" />
     <Compile Include="Entities\Users\OwnerShipType.cs" />

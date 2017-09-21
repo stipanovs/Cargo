@@ -23,7 +23,7 @@ namespace CargoLogistic.DAL.Entities
             VolumeCapacity = voluleCapacity;
         }
 
-        protected TransportSpecification()
+        public TransportSpecification()
         {
             
         }

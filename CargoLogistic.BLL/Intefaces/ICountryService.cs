@@ -9,10 +9,12 @@ namespace CargoLogistic.BLL.Intefaces
 {
     public interface ICountryService
     {
-        CountryDTO GetById(long Id);
-        CountryDTO GetByname(string name);
+        CountryDto GetById(long Id);
+        CountryDto GetByName(string name);
         void CreateCountry(CountryCreateDto countryDto);
-        IEnumerable<CountryDTO> CountryDtos();
-        IEnumerable<LocalityDto> LocalitiesDtos(CountryDTO countryDto);
+        IEnumerable<CountryDto> CountryDtos();
+        IEnumerable<LocalityDto> LocalitiesDtosByCountryName(string countryName);
+        void EditCountry(CountryDto countryDto);
+        void DeleteCountry(long countryId);
     }
 }

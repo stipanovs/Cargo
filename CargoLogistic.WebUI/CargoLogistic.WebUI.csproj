@@ -228,6 +228,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocalityController.cs" />
     <Compile Include="Controllers\PostCargoController.cs" />
+    <Compile Include="Controllers\PostTransportController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Filters\AjaxOrChildActionOnlyAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -240,11 +241,13 @@
     <Compile Include="Models\CountryListDtailsModel.cs" />
     <Compile Include="Models\CreateLocalityModel.cs" />
     <Compile Include="Models\CreatePostCargoModel.cs" />
+    <Compile Include="Models\CreatePostTransportModel.cs" />
     <Compile Include="Models\CustomValidationAttributes\DateToGreaterThenDateFrom.cs" />
     <Compile Include="Models\EditPostCargoModel.cs" />
     <Compile Include="Models\CustomValidationAttributes\PositiveNumberAttribute.cs" />
     <Compile Include="Models\LocalityModel.cs" />
-    <Compile Include="Models\PostCargoListDetailsModel.cs" />
+    <Compile Include="Models\PostCargoDetailsModel.cs" />
+    <Compile Include="Models\PostTransportDetailsModel.cs" />
     <Compile Include="Models\SearchPostCargoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -275,8 +278,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Country\AddLocality.cshtml" />
-    <Content Include="Views\Locality\Index.cshtml" />
+    <Content Include="Views\Locality\AddLocality.cshtml" />
     <Content Include="Views\ClientProfile\CreatePost.cshtml" />
     <Content Include="Views\Country\CountryList.cshtml" />
     <Content Include="Views\Country\Index.cshtml" />
@@ -294,7 +296,18 @@
     <Content Include="Views\ClientProfile\EditPostCargo.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateRequired.cshtml" />
     <Content Include="Views\ClientProfile\DeletePostCargo.cshtml" />
-    <Content Include="Views\Home\PostCargoSearch.cshtml" />
+    <Content Include="Views\PostCargo\PostCargoSearch.cshtml" />
+    <Content Include="Views\ClientProfile\PostTransportList.cshtml" />
+    <Content Include="Views\ClientProfile\CreatePostTransport.cshtml" />
+    <Content Include="Views\ClientProfile\EditPostTransport.cshtml" />
+    <Content Include="Views\ClientProfile\DeletePostTransport.cshtml" />
+    <Content Include="Views\ClientProfile\PublishPostTransport.cshtml" />
+    <Content Include="Views\ClientProfile\UnPublishPostTransport.cshtml" />
+    <Content Include="Views\Shared\_ResultNullPost.cshtml" />
+    <Content Include="Views\PostTransport\ListAllPostTransport.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\PostTransportListDisplay.cshtml" />
+    <Content Include="Views\PostTransport\PostTransportDetails.cshtml" />
+    <Content Include="Views\PostTransport\PostTransportSearch.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

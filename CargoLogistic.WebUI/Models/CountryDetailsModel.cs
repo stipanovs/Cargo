@@ -14,7 +14,6 @@ namespace CargoLogistic.WebUI.Models
         [Required]
         public string Name { get; set; }
         [Required]
-        [PositiveNumber]
         [RegularExpression(@"^\d{1,3}$", ErrorMessage = "Please enter up to 3 digits for a NumericCode")]
         public int NumericCode { get; set; }
         [Required]

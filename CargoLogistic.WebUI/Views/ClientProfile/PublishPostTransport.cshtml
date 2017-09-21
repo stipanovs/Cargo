@@ -1,0 +1,176 @@
+﻿@model CargoLogistic.WebUI.Models.PostTransportDetailsModel
+
+@{
+    ViewBag.Title = "PublishPostTransport";
+}
+
+<h2>PublishPostTransport</h2>
+
+<h3>Are you sure you want to publish this post?</h3>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PostId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountryFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocalityFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocalityFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountryTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocalityTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocalityTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostTransportTypes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostTransportTypes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdditionalInfo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdditionalInfo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransportDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransportDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeightCapacity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeightCapacity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VolumeCapacity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VolumeCapacity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PublicationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PublicationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserCompany)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserCompany)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserPhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserPhone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfViews)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfViews)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Publish" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "PostTransportList")
+        </div>
+    }
+</div>

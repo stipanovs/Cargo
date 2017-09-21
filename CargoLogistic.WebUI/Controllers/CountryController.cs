@@ -19,16 +19,12 @@ namespace CargoLogistic.WebUI.Controllers
     [Authorize(Roles = "admin")]
     public class CountryController : Controller
     {
-        private ICountryRepository _countryRepository;
-        private IRepository<Locality> _localityRepository;
+       
         private ICountryService _countryService;
 
-        public CountryController(ICountryRepository countryRepository,
-            IRepository<Locality> localityRepository, ICountryService countryService)
+        public CountryController(ICountryService countryService)
         {
-            _countryRepository = countryRepository;
-            _localityRepository = localityRepository;
-            _countryService = countryService;
+           _countryService = countryService;
         }
 
         public ActionResult Index()
@@ -36,13 +32,13 @@ namespace CargoLogistic.WebUI.Controllers
             return View();
         }
         
-        public JsonResult GetLocality(string countryName)
-        {
-            var country = _countryRepository.GetByName(countryName);
-            var locality = country.Localities.Select(x => x.Name).ToList();
+        //public JsonResult GetLocality(string countryName)
+        //{
+        //    var country = _countryRepository.GetByName(countryName);
+        //    var locality = country.Localities.Select(x => x.Name).ToList();
             
-            return Json(locality);
-        }
+        //    return Json(locality);
+        //}
 
         [HttpGet]
         public ActionResult CreateCountry()
@@ -74,16 +70,8 @@ namespace CargoLogistic.WebUI.Controllers
         [HttpGet]
         public ActionResult EditCountry(long countryId)
         {
-            var country = _countryRepository.GetById(countryId);
-            var model = new CountryDetailsModel
-            {
-                Id = country.Id,
-                Name = country.Name,
-                NumericCode = country.NumericCode,
-                Alpha2Code = country.Alpha2Code
-            };
-
-            return View(model);
+            var countryModel = Mapper.Map<CountryDetailsModel>(_countryService.GetById(countryId));
+            return View(countryModel);
         }
 
         [HttpPost]
@@ -93,12 +81,9 @@ namespace CargoLogistic.WebUI.Controllers
             {
                 return View(model);
             }
-            var country = _countryRepository.GetById(model.Id);
-            country.Name = model.Name;
-            country.NumericCode = model.NumericCode;
-            country.Alpha2Code = model.Alpha2Code;
 
-            _countryRepository.Update(country);
+            var countryDto = Mapper.Map<CountryDto>(model);
+            _countryService.EditCountry(countryDto);
 
             return Redirect("CountryList");
         }
@@ -106,23 +91,8 @@ namespace CargoLogistic.WebUI.Controllers
         [HttpGet]
         public ActionResult DeleteCountry(long countryId)
         {
-            
-            var country = _countryRepository.GetById(countryId);
-            if (country == null)
-            {
-                return HttpNotFound();
-            }
-
-            var model = new CountryDetailsModel
-            {
-                Id = countryId,
-                Name = country.Name,
-                NumericCode = country.NumericCode,
-                Alpha2Code = country.Alpha2Code
-
-            };
-
-            return View(model);
+            var countryModel = Mapper.Map<CountryDetailsModel>(_countryService.GetById(countryId));
+            return View(countryModel);
         }
 
 
@@ -130,40 +100,9 @@ namespace CargoLogistic.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmedCountry(long countryId)
         {
-            var country = _countryRepository.GetById(countryId);
-
-            _countryRepository.Delete(country);
-
+            _countryService.DeleteCountry(countryId);
             return RedirectToAction("CountryList", "Country");
         }
-
-        
-
-        [HttpGet]
-        public ActionResult AddLocality()
-        {
-            ViewBag.Countries = new SelectList(
-                _countryRepository.GetAll().Select(x => x.Name), "Countries");
-
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult AddLocality(CreateLocalityModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var country = _countryRepository.GetByName(model.Countries);
-            var locality = LocalityFactory.CreateLocality(model.Name, country, model.LocalityType);
-            _localityRepository.Save(locality);
-
-            return RedirectToAction("CountryList");
-        }
-
-        
     }
 
 }

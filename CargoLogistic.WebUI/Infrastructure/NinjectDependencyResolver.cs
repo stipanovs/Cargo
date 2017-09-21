@@ -39,10 +39,14 @@ namespace CargoLogistic.WebUI.Infrastructure
             //kernel.Bind<IRepository<Country>>().To<Repository<Country>>();
             kernel.Bind(typeof(IRepository<>)).To(typeof(Repository<>));
             kernel.Bind(typeof(IPostCargoRepository)).To(typeof(PostCargoRepository));
+            kernel.Bind(typeof(IPostTransportRepository)).To(typeof(PostTransportRepository));
             kernel.Bind(typeof(ICountryRepository)).To(typeof(CountryRepository));
             kernel.Bind(typeof(ILocalityRepository)).To(typeof(LocalityRepository));
+
             kernel.Bind(typeof(ICountryService)).To(typeof(CountryService));
-            
+            kernel.Bind(typeof(ILocalityService)).To(typeof(LocalityService));
+            kernel.Bind(typeof(IPostCargoService)).To(typeof(PostCargoService));
+            kernel.Bind(typeof(IPostTransportService)).To(typeof(PostTransportService));
 
         }
     }

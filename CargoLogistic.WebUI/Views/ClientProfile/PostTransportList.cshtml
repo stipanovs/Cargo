@@ -1,0 +1,86 @@
+﻿@model IEnumerable<CargoLogistic.WebUI.Models.PostTransportDetailsModel>
+
+@{
+    ViewBag.Title = "User's PostTransportList";
+}
+
+<h2>PostTransportList</h2>
+
+<div class="row">
+
+<div class="col-md-12">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>PublicationDate</td>
+                <td>DateFrom - DateTo</td>
+                <td>CountryFrom</td>
+                <td>CountryTo</td>
+                <td>Price</td>
+                <td>Transport Description</td>
+                <td>NumberOfViews</td>
+                <td>Status</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.PostId</td>
+                    <td>@Html.DisplayFor(m => p.PublicationDate)</td>
+                    <td>@Html.DisplayFor(m=>p.DateFrom, "MyDate") - @Html.DisplayFor(m => p.DateTo, "MyDate")</td>
+                    <td><span>@p.CountryFrom</span><br /><span>@p.LocalityFrom</span></td>
+                    <td><span>@p.CountryTo</span><br /><span>@p.LocalityTo</span></td>
+                    <td>@Html.DisplayFor(m => p.Price)</td>
+                    <td><span>@p.TransportDescription</span><br /><span>@p.WeightCapacity tones | @p.VolumeCapacity m3</span></td>
+                    <td>@p.NumberOfViews</td>
+                    <td>@CustomHelpers.DisplayStatus(p.Status)</td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditPostTransport", new { postId = p.PostId }) |
+                        @Html.ActionLink("Delete", "DeletePostTransport", new { postId = p.PostId })|
+                        @if (p.Status)
+                        {
+                            @Ajax.ActionLink("UnPublish", "UnPublishPostTransport", new {postId=p.PostId}, new AjaxOptions
+                            {
+                                UpdateTargetId = "myContentPublish", HttpMethod = "GET", InsertionMode=InsertionMode.Replace, OnComplete = "ShowPopUp()"
+                            })
+                        }
+                        else
+                        {
+                            @Ajax.ActionLink("Publish", "PublishPostTransport", new {postId=p.PostId}, new AjaxOptions
+                            {
+                                UpdateTargetId = "myContentPublish", HttpMethod = "GET", InsertionMode=InsertionMode.Replace, OnComplete = "ShowPopUp()"
+                            })
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    @Html.ActionLink("CreatePostTransport", "CreatePostTransport", "ClientProfile", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back to ClientProfile", "Index", "ClientProfile", null, new { @class = "btn btn-primary" })
+</div>
+
+</div>
+
+
+<div class="modal fade" id="myModalPublish" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Publish</h4>
+            </div>
+            <div class="modal-body">
+                <div id='myContentPublish'></div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

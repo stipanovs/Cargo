@@ -1,0 +1,71 @@
+﻿@model IEnumerable<CargoLogistic.WebUI.Models.PostTransportDetailsModel>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Post Id</td>
+            <td>PublicationDate</td>
+            <td>Cod</td>
+            <td>CountryFrom</td>
+            <td>Cod</td>
+            <td>CountryTo</td>
+            <td>DateFrom - DateTo</td>
+            <td>TransportInformation</td>
+            <td>Company</td>
+            <td>Details</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.PostId</td>
+                <td>@Html.DisplayFor(m => p.PublicationDate, "MyPublishDate")</td>
+                <td>@p.CountryFrom</td>
+                <td><span>@p.CountryFrom</span><br /><span>@p.LocalityFrom</span></td>
+                <td>@p.CountryTo</td>
+                <td><span>@p.CountryTo</span><br /><span>@p.LocalityTo</span></td>
+                <td><span>@Html.DisplayFor(m => p.DateFrom, "MyDate")</span> - <span>@Html.DisplayFor(m => p.DateTo, "MyDate")</span></td>
+                <td><span>@p.TransportDescription</span><br /><span>@p.WeightCapacity tones</span> | <span>@p.VolumeCapacity m3</span></td>
+                <td>@p.UserCompany</td>
+                <td>
+                    @Ajax.ActionLink("Details", "PostTransportDetails", "PostTransport", new { postId = p.PostId }, new AjaxOptions
+           {
+               UpdateTargetId = "myModalContent",
+               HttpMethod = "GET",
+               InsertionMode = InsertionMode.Replace,
+               OnComplete = "ShowPopUp()"
+           }, new { @class = "btn btn-primary" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<div class="modal fade" id="myModalPublish" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Post Cargo Details</h4>
+            </div>
+            <div class="modal-body">
+                <div id='myModalContent'>
+
+                </div>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <div id="notauthorized">
+                        <h3>You are not authorized!!!</h3> @Html.ActionLink("Log in", "Login", "Account", null, new { @class = "btn btn-default" })
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+

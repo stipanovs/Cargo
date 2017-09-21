@@ -21,7 +21,7 @@ namespace CargoLogistic.DAL.Mapping
             References(x => x.LocationFrom).Column("LocationFromId").Cascade.Delete();
             References(x => x.LocationTo).Column("LocationToId").Cascade.Delete();
             References(x => x.User).Column("UserId");
-            Map(x => x.PostTransportType).CustomType<EnumStringType<PostTransportType>>();
+            Map(x => x.PostTransportType).CustomType<EnumStringType<PostTransportType>>().Column("TransportType");
         }
     }
 }

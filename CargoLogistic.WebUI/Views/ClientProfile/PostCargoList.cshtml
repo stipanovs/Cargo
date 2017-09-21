@@ -1,7 +1,7 @@
-﻿@model IEnumerable<CargoLogistic.WebUI.Models.PostCargoListDetailsModel>
+﻿@model IEnumerable<CargoLogistic.WebUI.Models.PostCargoDetailsModel>
 
 @{
-    ViewBag.Title = "PostCargo List";
+    ViewBag.Title = "User's PostCargo List";
 }
 
 <h2>My Loads Post List</h2>
@@ -29,10 +29,10 @@
         {
             <tr>
                 <td>@p.PostId</td>
-                <td>@Html.DisplayFor(m => p.PublicationDate)</td>
-                <td>@Html.DisplayFor(m=>p.DateFrom) - @Html.DisplayFor(m => p.DateTo)</td>
-                <td><span>@p.CountryFrom.Alpha2Code</span><br/><span>@p.LocalityFrom</span></td>
-                <td><span>@p.CountryTo.Alpha2Code</span><br/><span>@p.LocalityTo</span></td>
+                <td>@Html.DisplayFor(m => p.PublicationDate, "MyPublishDate")</td>
+                <td>@Html.DisplayFor(m=>p.DateFrom, "MyDate") - @Html.DisplayFor(m => p.DateTo, "MyDate")</td>
+                <td><span>@p.CountryFrom</span><br/><span>@p.LocalityFrom</span></td>
+                <td><span>@p.CountryTo</span><br/><span>@p.LocalityTo</span></td>
                 <td>@Html.DisplayFor(m=>p.Price)</td>
                 <td><span>@p.CargoDescription</span><br/><span>@p.CargoWeight tones | @p.CargoVolume m3</span></td>
                 <td>@p.NumberOfViews</td>
@@ -42,12 +42,17 @@
                     @Html.ActionLink("Delete", "DeletePostCargo", new { postId = p.PostId })| 
                     @if(p.Status)
                     {
-                        @*@Html.ActionLink("UnPublish", "UnPublishPostCargo", new {postId = p.PostId})*@
-                        @Html.ActionLink("UnPublish", null, null, new {onclick="PostUnPublish(" + p.PostId +")", data_toggle="modal", href=""})
+                        @Ajax.ActionLink("UnPublish", "UnPublishPostCargo", new {postId=p.PostId}, new AjaxOptions
+                        {
+                            UpdateTargetId = "myContentPublish", HttpMethod = "GET", InsertionMode=InsertionMode.Replace, OnComplete = "ShowPopUp()"
+                        })
                     }
                     else{
-                        @Html.ActionLink("Publish", null, null, new {onclick="PostPublish(" + p.PostId +")", data_toggle="modal", href=""})
-                         @*<a id="anchorDetail" onclick="PostPublish(@p.PostId)" href="" data-toggle="modal">-pub-</a>*@
+                        
+                        @Ajax.ActionLink("Publish", "PublishPostCargo", new {postId=p.PostId}, new AjaxOptions
+                        {
+                            UpdateTargetId = "myContentPublish", HttpMethod = "GET", InsertionMode=InsertionMode.Replace, OnComplete = "ShowPopUp()"
+                        })
                     }
                 </td>
             </tr>
@@ -71,15 +76,19 @@
             </div>
             <div class="modal-body">
                 <div id='myContentPublish'></div>
-                @*another content*@  
-
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                @*<button type="button" class="btn btn-success">Submit</button>*@
+                
             </div>
         </div>
     </div>
 </div>
 
-
+<style>
+    table thead td {
+        font-size: 16px;
+        color: blue;
+    }
+</style>

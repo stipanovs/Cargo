@@ -64,7 +64,6 @@ namespace CargoLogistic.WebUI.Controllers
                     }
                 }
 
-                // If we got this far, something failed, redisplay form
                 return View(model);
             }
 
@@ -85,7 +84,7 @@ namespace CargoLogistic.WebUI.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = new ApplicationUser() {UserName = model.UserName, Email = model.Email};
+                    var user = new ApplicationUser() {UserName = model.UserName, Email = model.Email, PhoneNumber = model.PhoneNumber, CompanyName = model.CompanyName };
                     //FirstName
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
@@ -99,7 +98,6 @@ namespace CargoLogistic.WebUI.Controllers
                     }
                 }
 
-                // If we got this far, something failed, redisplay form
                 return View(model);
             }
 

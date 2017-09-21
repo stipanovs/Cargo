@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using CargoLogistic.DAL.Entities;
 using CargoLogistic.WebUI.Models.CustomValidationAttributes;
 
 
@@ -21,23 +19,21 @@ namespace CargoLogistic.WebUI.Models
 
         public string LocalityTo { get; set; }
         
-        
         [Display(Name = "Transport Type")]
-        public string PostTransportType { get; set; }
+        public string PostTransportTypes { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
+        //[DataType(DataType.Date)]
         public DateTime DateFrom { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
+        //[DataType(DataType.Date)]
         [DateToGreaterThanDateFrom("DateFrom")]
         public DateTime DateTo { get; set; }
 
         [Required]
         //[DataType(DataType.Currency)]
-        [PositiveNumber(ErrorMessage = "Price must be positive(Server)")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Price must be a Number.")]
+        [PositivePrice(ErrorMessage = "Price must be positive(Server)")]
         public decimal Price { get; set; }
 
         [StringLength(200, ErrorMessage = "The length can't exceed 200 symbols")]
@@ -47,12 +43,11 @@ namespace CargoLogistic.WebUI.Models
         [StringLength(100, ErrorMessage = "The length can't exceed 100 symbols")]
         public string CargoDescription { get; set; }
 
-        [PositiveNumber(ErrorMessage = "Weight must be positive")]
-        public int CargoWeight { get; set; }
+        [Display(Name = "Cargo Weight, tonnes")]
+        public double CargoWeight { get; set; }
 
-        [PositiveNumber(ErrorMessage = "Volume must be positive")]
-        public int CargoVolume { get; set; }
-
-
+        [Display(Name ="Cargo Volume, m3" )]
+        public double CargoVolume { get; set; }
+        
     }
 }

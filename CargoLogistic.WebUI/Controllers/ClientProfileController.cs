@@ -4,11 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using CargoLogistic.DAL.Entities;
+using AutoMapper;
+using CargoLogistic.BLL.DTO;
+using CargoLogistic.BLL.Intefaces;
 using CargoLogistic.DAL.Entities.Users;
-using CargoLogistic.DAL.Factory;
-using CargoLogistic.DAL.Interfaces;
-using CargoLogistic.DAL.Repository;
 using CargoLogistic.WebUI.Filters;
 using CargoLogistic.WebUI.Models;
 using Microsoft.AspNet.Identity;
@@ -20,22 +19,18 @@ namespace CargoLogistic.WebUI.Controllers
     [Authorize]
     public class ClientProfileController : Controller
     {
-        private IPostCargoRepository _postCargoRepository;
-        private ICountryRepository _countryRepository;
-        private ILocalityRepository _localityRepository;
-        private IRepository<Location> _locationRepository;
-        private IRepository<CargoSpecification> _cargospecRepository;
+        
+        private IPostCargoService _postCargoService;
+        private IPostTransportService _postTransportService;
+        private ICountryService _countryService;
 
 
-        public ClientProfileController(IPostCargoRepository postCargoRepo, 
-            ICountryRepository countryRepository, ILocalityRepository localityRepository,
-            IRepository<Location> locationRepository, IRepository<CargoSpecification> cargospecRepository)
+        public ClientProfileController(IPostCargoService postCargoService, IPostTransportService postTransportService,
+            ICountryService countryService)
         {
-            _postCargoRepository = postCargoRepo;
-            _countryRepository = countryRepository;
-            _localityRepository = localityRepository;
-            _locationRepository = locationRepository;
-            _cargospecRepository = cargospecRepository;
+            _postCargoService = postCargoService;
+            _postTransportService = postTransportService;
+            _countryService = countryService;
         }
         
         public ActionResult Index()
@@ -45,40 +40,31 @@ namespace CargoLogistic.WebUI.Controllers
         
         public ActionResult PostCargoList()
         {
-            var posts = _postCargoRepository.GetAllPostCargoUser(User.Identity.GetUserId());
-            var model = new List<PostCargoListDetailsModel>();
-            foreach (var p in posts)
-            {
-                model.Add(
-                    new PostCargoListDetailsModel
-                    {
-                        PostId = p.Id,
-                        PublicationDate = p.PublicationDate,
-                        DateFrom = p.DateFrom,
-                        DateTo = p.DateTo,
-                        CountryFrom = p.LocationFrom.Country,
-                        CountryTo = p.LocationTo.Country,
-                        LocalityFrom = p.LocationFrom.Locality.Name,
-                        LocalityTo = p.LocationTo.Locality.Name,
-                        Price = p.Price,
-                        CargoDescription = p.Specification.Description,
-                        CargoWeight = p.Specification.Weight,
-                        CargoVolume = p.Specification.Volume,
-                        Status = p.Status,
-                        NumberOfViews = p.NumberOfViews
-                        
-                    });
-            }
             
+            var postCargoDetailsListDto = _postCargoService.GetAllPostCargoDetailsDtos(User.Identity.GetUserId());
+            var postCargoDetailsListModel = Mapper.Map<IEnumerable<PostCargoDetailsModel>>(postCargoDetailsListDto)
+                .OrderByDescending(x=>x.PublicationDate);
 
-           return View(model.OrderByDescending(x=>x.PublicationDate));
+           return View(postCargoDetailsListModel);
         }
 
+        public ActionResult PostTransportList()
+        {
+
+            var postTransportDetailsListDto = _postTransportService.GetAllPostTransportDetailsDtos(User.Identity.GetUserId());
+            var postTransportDetailsListModel = Mapper.Map<IEnumerable<PostTransportDetailsModel>>(postTransportDetailsListDto)
+                .OrderByDescending(x => x.PublicationDate);
+
+            return View(postTransportDetailsListModel);
+        }
+
+        #region CreatePostCargo()
+
         [HttpGet]
-        //[AjaxOrChildActionOnly]
+        //[ChildActionOnly]
         public ActionResult CreatePost()
         {
-            var countries = _countryRepository.GetAll()
+            var countries = _countryService.CountryDtos()
                 .Select( c => new SelectListItem
                 {
                    Text = c.Name,
@@ -95,10 +81,9 @@ namespace CargoLogistic.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreatePost(CreatePostCargoModel model)
         {
-            
             if (!ModelState.IsValid)
             {
-               var countries = _countryRepository.GetAll()
+               var countries = _countryService.CountryDtos()
                     .Select(c => new SelectListItem
                     {
                         Text = c.Name,
@@ -112,156 +97,95 @@ namespace CargoLogistic.WebUI.Controllers
                 return View(model);
             }
 
-            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(NHibernateSession.Current));
+            var UserManager = new UserManager<ApplicationUser>
+                (new UserStore<ApplicationUser>(NHibernateSession.Current));
             var user = UserManager.FindById(User.Identity.GetUserId());
 
-            Location locationFrom = new Location()
-            {
-                Country = _countryRepository.GetByName(model.CountryFrom),
-                Locality = _localityRepository.GetByName(model.LocalityFrom)
-            };
-
-            Location locationTo = new Location()
-            {
-                Country = _countryRepository.GetByName(model.CountryTo),
-                Locality = _localityRepository.GetByName(model.LocalityTo)
-            };
-
-            CargoSpecification cargoSpecification = new CargoSpecification()
-            {
-                Description = model.CargoDescription,
-                Weight = model.CargoWeight,
-                Volume = model.CargoVolume
-            };
-
-            var postFactory = new PostFactory();
-            var post = postFactory.CreateNewPost(user, model.DateFrom, model.DateTo, locationFrom, locationTo,
-                model.PostTransportType, model.Price, model.AdditionalInfo, cargoSpecification);
-
-
-            _locationRepository.Save(locationFrom);
-            _locationRepository.Save(locationTo);
-            _cargospecRepository.Save(cargoSpecification);
-            _postCargoRepository.Save(post as PostCargo);
+            var postCargodto = Mapper.Map<PostCargoCreateDto>(model);
+            _postCargoService.CreatePostCargo(postCargodto, user);
             
             return Redirect("PostCargoList");
         }
 
+        #endregion()
+
+        #region CreatePostTransport()
+
+
+
+
+        [HttpGet]
+        //[ChildActionOnly]
+        public ActionResult CreatePostTransport()
+        {
+            var countries = _countryService.CountryDtos()
+                .Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Name
+                });
+
+            ViewBag.CountryFrom = countries;
+            ViewBag.CountryTo = countries;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreatePostTransport(CreatePostTransportModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var countries = _countryService.CountryDtos()
+                    .Select(c => new SelectListItem
+                    {
+                        Text = c.Name,
+                        Value = c.Name,
+
+                    });
+
+                ViewBag.CountryFrom = countries;
+                ViewBag.CountryTo = countries;
+
+                return View(model);
+            }
+
+            var UserManager = new UserManager<ApplicationUser>
+                (new UserStore<ApplicationUser>(NHibernateSession.Current));
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
+            var postTransportdto = Mapper.Map<PostTransportCreateDto>(model);
+            _postTransportService.CreatePostTransport(postTransportdto, user);
+
+            return RedirectToAction("PostTransportList");
+        }
+
+
+        #endregion
+
+        #region GetLocality()
+
         public JsonResult GetLocality(string countryName)
         {
-            var country = _countryRepository.GetByName(countryName);
-            var locality = country.Localities.Select(x => x.Name).ToList();
-
+            var locality = _countryService.LocalitiesDtosByCountryName(countryName)
+                .Select(l=>l.Name).ToList();
             return Json(locality);
         }
 
-        [HttpGet]
-        public ActionResult PublishPostCargo(long postId)
-        {
-            var post = _postCargoRepository.GetById(postId);
-            if (post == null)
-            {
-                return HttpNotFound();
-            }
+        #endregion
 
-            if (post.Status)
-            {
-                return RedirectToAction("PostCargoList", "ClientProfile");
-            }
+        #region EditPostCargo()
 
-            var model = new PostCargoListDetailsModel
-            {
-                PostId = post.Id,
-                PublicationDate = post.PublicationDate,
-                CountryFrom = post.LocationFrom.Country,
-                CountryTo = post.LocationTo.Country
-            };
 
-            return PartialView(model); 
-        }
 
-        [HttpPost, ActionName("PublishPostCargo")]
-        [ValidateAntiForgeryToken]
-        public ActionResult PublishConfirmedPostCargo(long postId)
-        {
-            var post = _postCargoRepository.GetById(postId);
-            if (post.Status)
-            {
-                return RedirectToAction("PostCargoList", "ClientProfile");
-            }
-            
-            post.Status = true;
-            post.PublicationDate = DateTime.Now;
-            _postCargoRepository.Update(post);
-            
-            return RedirectToAction("PostCargoList", "ClientProfile");
-        }
-
-        [HttpGet]
-        public ActionResult UnPublishPostCargo(long postId)
-        {
-            var post = _postCargoRepository.GetById(postId);
-            if (post == null)
-            {
-                return HttpNotFound();
-            }
-
-            if (!post.Status)
-            {
-                return RedirectToAction("PostCargoList", "ClientProfile");
-            }
-
-            var model = new PostCargoListDetailsModel
-            {
-                PostId = post.Id,
-                PublicationDate = post.PublicationDate,
-                CountryFrom = post.LocationFrom.Country,
-                CountryTo = post.LocationTo.Country
-            };
-
-            return PartialView(model);
-        }
-
-        [HttpPost, ActionName("UnPublishPostCargo")]
-        [ValidateAntiForgeryToken]
-        public ActionResult UnPublishConfirmedPostCargo(long postId)
-        {
-            var post = _postCargoRepository.GetById(postId);
-            if (!post.Status)
-            {
-                return RedirectToAction("PostCargoList", "ClientProfile");
-            }
-
-            post.Status = false;
-            _postCargoRepository.Update(post);
-
-            return RedirectToAction("PostCargoList", "ClientProfile");
-        }
 
         [HttpGet]
         public ActionResult EditPostCargo(long postId)
         {
-            var post = _postCargoRepository.GetById(postId);
-            var model = new EditPostCargoModel()
-            {
-                PostId = post.Id,
-                PublicationDate = post.PublicationDate,
-                CountryFrom =  post.LocationFrom.Country.Name,
-                LocalityFrom = post.LocationFrom.Locality.Name,
-                CountryTo = post.LocationTo.Country.Name,
-                LocalityTo = post.LocationTo.Locality.Name,
-                AdditionalInfo = post.AdditionalInformation,
-                CargoDescription = post.Specification.Description,
-                CargoVolume = post.Specification.Volume,
-                CargoWeight = post.Specification.Weight,
-                DateFrom = post.DateFrom,
-                DateTo = post.DateTo,
-                PostTransportTypes = post.PostTransportType.ToString(),
-                Price = post.Price,
-                Status = post.Status
-            };
+            var model = Mapper.Map<EditPostCargoModel>(_postCargoService.GetPostCargoEditDtoById(postId));
 
-            var countriesFrom = _countryRepository.GetAll()
+            var countriesFrom = _countryService.CountryDtos()
                 .Select(c => new SelectListItem
                 {
                     Text = c.Name,
@@ -270,27 +194,24 @@ namespace CargoLogistic.WebUI.Controllers
                 });
             
 
-            var countriesTo = _countryRepository.GetAll()
+            var countriesTo = _countryService.CountryDtos()
                 .Select(c => new SelectListItem
                 {
                     Text = c.Name,
                     Value = c.Name,
                     Selected = c.Name == model.CountryTo
                 });
-            
 
-            var localityFrom = _localityRepository.GetAll()
-                .Where(l=>l.Country.Name == model.CountryFrom)
+            var localityFrom = _countryService.LocalitiesDtosByCountryName(model.CountryFrom)
                 .Select(l => new SelectListItem
                 {
                     Text = l.Name,
                     Value = l.Name,
                     Selected = l.Name == model.LocalityFrom
-                });
-
-            var localityTo = _localityRepository.GetAll()
-                .Where(l => l.Country.Name == model.CountryTo)
-                .Select(l => new SelectListItem
+                }); 
+                
+            var localityTo = _countryService.LocalitiesDtosByCountryName(model.CountryTo)
+               .Select(l => new SelectListItem
                 {
                     Text = l.Name,
                     Value = l.Name,
@@ -311,7 +232,7 @@ namespace CargoLogistic.WebUI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var countriesFrom = _countryRepository.GetAll()
+                var countriesFrom = _countryService.CountryDtos()
                     .Select(c => new SelectListItem
                     {
                         Text = c.Name,
@@ -320,7 +241,7 @@ namespace CargoLogistic.WebUI.Controllers
                     });
 
 
-                var countriesTo = _countryRepository.GetAll()
+                var countriesTo = _countryService.CountryDtos()
                     .Select(c => new SelectListItem
                     {
                         Text = c.Name,
@@ -328,9 +249,7 @@ namespace CargoLogistic.WebUI.Controllers
                         Selected = c.Name == model.CountryTo
                     });
 
-
-                var localityFrom = _localityRepository.GetAll()
-                    .Where(l => l.Country.Name == model.CountryFrom)
+                var localityFrom = _countryService.LocalitiesDtosByCountryName(model.CountryFrom)
                     .Select(l => new SelectListItem
                     {
                         Text = l.Name,
@@ -338,14 +257,14 @@ namespace CargoLogistic.WebUI.Controllers
                         Selected = l.Name == model.LocalityFrom
                     });
 
-                var localityTo = _localityRepository.GetAll()
-                    .Where(l => l.Country.Name == model.CountryTo)
+                var localityTo = _countryService.LocalitiesDtosByCountryName(model.CountryTo)
                     .Select(l => new SelectListItem
                     {
                         Text = l.Name,
                         Value = l.Name,
                         Selected = l.Name == model.LocalityTo
                     });
+
 
                 ViewBag.CountryFrom = countriesFrom;
                 ViewBag.LocalityFrom = localityFrom;
@@ -355,80 +274,276 @@ namespace CargoLogistic.WebUI.Controllers
                 return View(model);
             }
 
-            var post = _postCargoRepository.GetById(model.PostId);
-
-            Location locationFrom = post.LocationFrom;
-            locationFrom.Country = _countryRepository.GetByName(model.CountryFrom);
-            locationFrom.Locality = _localityRepository.GetByName(model.LocalityFrom);
-
-            Location locationTo = post.LocationTo;
-
-            locationTo.Country = _countryRepository.GetByName(model.CountryTo);
-            locationTo.Locality = _localityRepository.GetByName(model.LocalityTo);
-
-            CargoSpecification cargoSpecification = post.Specification;
-
-            cargoSpecification.Description = model.CargoDescription;
-            cargoSpecification.Weight = model.CargoWeight;
-            cargoSpecification.Volume = model.CargoVolume;
-
-            post.LocationTo = locationTo;
-            post.LocationFrom = locationFrom;
-            post.Specification = cargoSpecification;
-            post.Price = model.Price;
-            PostTransportType postTransportType;
-            Enum.TryParse(model.PostTransportTypes, true, out postTransportType);
-            post.PostTransportType = postTransportType;
-            post.DateFrom = model.DateFrom;
-            post.DateTo = model.DateTo;
-            post.AdditionalInformation = model.AdditionalInfo;
-
-            _postCargoRepository.Update(post);
+            var postCargoEditDto = Mapper.Map<PostCargoEditDto>(model);
+            _postCargoService.EditPostCargo(postCargoEditDto);
 
            return RedirectToAction("PostCargoList");
         }
 
-        public ActionResult DeletePostCargo(long postId)
-        {
-            var post = _postCargoRepository.GetById(postId);
-            if (post == null)
-            {
-                return HttpNotFound();
-            }
+        #endregion
 
-            var model = new EditPostCargoModel()
-            {
-                PostId = post.Id,
-                PublicationDate = post.PublicationDate,
-                CountryFrom = post.LocationFrom.Country.Name,
-                LocalityFrom = post.LocationFrom.Locality.Name,
-                CountryTo = post.LocationTo.Country.Name,
-                LocalityTo = post.LocationTo.Locality.Name,
-                AdditionalInfo = post.AdditionalInformation,
-                CargoDescription = post.Specification.Description,
-                CargoVolume = post.Specification.Volume,
-                CargoWeight = post.Specification.Weight,
-                DateFrom = post.DateFrom,
-                DateTo = post.DateTo,
-                PostTransportTypes = post.PostTransportType.ToString(),
-                Price = post.Price,
-                Status = post.Status
-            };
+        #region EditPostTransport()
+        
+        [HttpGet]
+        public ActionResult EditPostTransport(long postId)
+        {
+            var model = Mapper.Map<CreatePostTransportModel>(_postTransportService.GeTransportCreateDtoById(postId));
+
+            var countriesFrom = _countryService.CountryDtos()
+                .Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Name,
+                    Selected = c.Name == model.CountryFrom
+                });
+
+
+            var countriesTo = _countryService.CountryDtos()
+                .Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Name,
+                    Selected = c.Name == model.CountryTo
+                });
+
+            var localityFrom = _countryService.LocalitiesDtosByCountryName(model.CountryFrom)
+                .Select(l => new SelectListItem
+                {
+                    Text = l.Name,
+                    Value = l.Name,
+                    Selected = l.Name == model.LocalityFrom
+                });
+
+            var localityTo = _countryService.LocalitiesDtosByCountryName(model.CountryTo)
+               .Select(l => new SelectListItem
+               {
+                   Text = l.Name,
+                   Value = l.Name,
+                   Selected = l.Name == model.LocalityTo
+               });
+
+
+            ViewBag.CountryFrom = countriesFrom;
+            ViewBag.LocalityFrom = localityFrom;
+            ViewBag.CountryTo = countriesTo;
+            ViewBag.LocalityTo = localityTo;
 
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditPostTransport(CreatePostTransportModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var countriesFrom = _countryService.CountryDtos()
+                    .Select(c => new SelectListItem
+                    {
+                        Text = c.Name,
+                        Value = c.Name,
+                        Selected = c.Name == model.CountryFrom
+                    });
+
+
+                var countriesTo = _countryService.CountryDtos()
+                    .Select(c => new SelectListItem
+                    {
+                        Text = c.Name,
+                        Value = c.Name,
+                        Selected = c.Name == model.CountryTo
+                    });
+
+                var localityFrom = _countryService.LocalitiesDtosByCountryName(model.CountryFrom)
+                    .Select(l => new SelectListItem
+                    {
+                        Text = l.Name,
+                        Value = l.Name,
+                        Selected = l.Name == model.LocalityFrom
+                    });
+
+                var localityTo = _countryService.LocalitiesDtosByCountryName(model.CountryTo)
+                    .Select(l => new SelectListItem
+                    {
+                        Text = l.Name,
+                        Value = l.Name,
+                        Selected = l.Name == model.LocalityTo
+                    });
+
+
+                ViewBag.CountryFrom = countriesFrom;
+                ViewBag.LocalityFrom = localityFrom;
+                ViewBag.CountryTo = countriesTo;
+                ViewBag.LocalityTo = localityTo;
+
+                return View(model);
+            }
+
+            var postTransportDto = Mapper.Map<PostTransportCreateDto>(model);
+            _postTransportService.EditPostTransport(postTransportDto);
+
+            return RedirectToAction("PostTransportList");
+        }
+
+        #endregion
+
+        #region DeletePostCargo()
+
+        public ActionResult DeletePostCargo(long postId)
+        {
+            var postCargoDetailsModel =
+                Mapper.Map<PostCargoDetailsModel>(_postCargoService.GetPostCargoDetailsDtoById(postId));
+            return View(postCargoDetailsModel);
         }
 
         [HttpPost, ActionName("DeletePostCargo")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmedPostCargo(long postId)
         {
-            var post = _postCargoRepository.GetById(postId);
-            _postCargoRepository.Delete(post);
-            
+            _postCargoService.DeletePostCargo(postId);
             return RedirectToAction("PostCargoList", "ClientProfile");
         }
 
+        #endregion
 
+        public ActionResult DeletePostTransport(long postId)
+        {
+            var postTransportDetailsModel =
+                Mapper.Map<PostTransportDetailsModel>(_postTransportService.GetPostTransportDetailsDto(postId));
+            return View(postTransportDetailsModel);
+        }
+
+        [HttpPost, ActionName("DeletePostTransport")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmedPostTransport(long postId)
+        {
+            _postTransportService.DeletePostTransport(postId);
+            return RedirectToAction("PostTransportList", "ClientProfile");
+        }
+
+        #region PublishPostCargo()
+        
+        [HttpGet]
+        public ActionResult PublishPostCargo(long postId)
+        {
+            var postCargoDetailsModel =
+                Mapper.Map<PostCargoDetailsModel>(_postCargoService.GetPostCargoDetailsDtoById(postId));
+            
+            if (postCargoDetailsModel.Status)
+            {
+                return RedirectToAction("PostCargoList", "ClientProfile");
+            }
+            return PartialView(postCargoDetailsModel);
+        }
+
+        [HttpPost, ActionName("PublishPostCargo")]
+        [ValidateAntiForgeryToken]
+        public ActionResult PublishConfirmedPostCargo(long postId)
+        {
+            var postCargoDetailsModel =
+                Mapper.Map<PostCargoDetailsModel>(_postCargoService.GetPostCargoDetailsDtoById(postId));
+
+            if (postCargoDetailsModel.Status)
+            {
+                return RedirectToAction("PostCargoList", "ClientProfile");
+            }
+
+            _postCargoService.PublichPostCargo(postId);
+            return RedirectToAction("PostCargoList", "ClientProfile");
+        }
+        #endregion
+
+        #region UnPublishPostCargo()
+        [HttpGet]
+        public ActionResult UnPublishPostCargo(long postId)
+        {
+            var postCargoDetailsModel =
+                Mapper.Map<PostCargoDetailsModel>(_postCargoService.GetPostCargoDetailsDtoById(postId));
+
+            if (!postCargoDetailsModel.Status)
+            {
+                return RedirectToAction("PostCargoList", "ClientProfile");
+            }
+            
+            return PartialView(postCargoDetailsModel);
+        }
+
+        [HttpPost, ActionName("UnPublishPostCargo")]
+        [ValidateAntiForgeryToken]
+        public ActionResult UnPublishConfirmedPostCargo(long postId)
+        {
+            var postCargoDetailsModel =
+                Mapper.Map<PostCargoDetailsModel>(_postCargoService.GetPostCargoDetailsDtoById(postId));
+            if (!postCargoDetailsModel.Status)
+            {
+                return RedirectToAction("PostCargoList", "ClientProfile");
+            }
+
+           _postCargoService.UnPublichPostCargo(postId);
+
+            return RedirectToAction("PostCargoList", "ClientProfile");
+        }
+        #endregion
+        
+       
+        [HttpGet]
+        public ActionResult PublishPostTransport(long postId)
+        {
+            var postTransportDetailsModel =
+                Mapper.Map<PostTransportDetailsModel>(_postTransportService.GetPostTransportDetailsDto(postId));
+
+            if (postTransportDetailsModel.Status)
+            {
+                return RedirectToAction("PostTransportList", "ClientProfile");
+            }
+
+            return PartialView("PublishPostTransport", postTransportDetailsModel);
+        }
+
+        [HttpPost, ActionName("PublishPostTransport")]
+        [ValidateAntiForgeryToken]
+        public ActionResult PublishConfirmedPostTransport(long postId)
+        {
+            var postTransportDetailsModel =
+                Mapper.Map<PostTransportDetailsModel>(_postTransportService.GetPostTransportDetailsDto(postId));
+
+            if (postTransportDetailsModel.Status)
+            {
+                return RedirectToAction("PostTransportList", "ClientProfile");
+            }
+
+            _postTransportService.PublishPostTransport(postId);
+            return RedirectToAction("PostTransportList", "ClientProfile");
+        }
+
+        [HttpGet]
+        public ActionResult UnPublishPostTransport(long postId)
+        {
+            var postTransportDetailsModel =
+                Mapper.Map<PostTransportDetailsModel>(_postTransportService.GetPostTransportDetailsDto(postId));
+
+            if (!postTransportDetailsModel.Status)
+            {
+                return RedirectToAction("PostTransportList", "ClientProfile");
+            }
+
+            return PartialView(postTransportDetailsModel);
+        }
+
+        [HttpPost, ActionName("UnPublishPostTransport")]
+        [ValidateAntiForgeryToken]
+        public ActionResult UnPublishConfirmedPostTransport(long postId)
+        {
+            var postTransportDetailsModel =
+                Mapper.Map<PostTransportDetailsModel>(_postTransportService.GetPostTransportDetailsDto(postId));
+            if (!postTransportDetailsModel.Status)
+            {
+                return RedirectToAction("PostTransportList", "ClientProfile");
+            }
+
+            _postTransportService.UnPublishPostTransport(postId);
+
+            return RedirectToAction("PostTransportList", "ClientProfile");
+        }
 
     }
 }

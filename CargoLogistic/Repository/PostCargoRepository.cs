@@ -31,5 +31,32 @@ namespace CargoLogistic.DAL.Repository
                 .Where(x => x.User.Id == userId)
                 .List<PostCargo>();
         }
+
+        public IEnumerable<PostCargo> GetAllPublishedPostCargo()
+        {
+            var posts = _session.QueryOver<PostCargo>()
+                .Where(x => x.Status)
+                .List<PostCargo>();
+            return posts;
+        }
+
+        public IEnumerable<PostCargo> SearchPostCargoByNameCountryFromCountryTo(string countryFromName, string countryToName)
+        {
+            Country countryFrom = null;
+            Country countryTo = null;
+            Location locationFrom = null;
+            Location locationTo = null;
+            PostCargo postCargo = null;
+            
+            var posts = _session.QueryOver(() => postCargo)
+                .JoinAlias(p => p.LocationFrom, () => locationFrom)
+                .JoinAlias(p => p.LocationTo, () => locationTo)
+                .JoinAlias(() => locationFrom.Country, () => countryFrom)
+                .JoinAlias(() => locationTo.Country, () => countryTo)
+                .Where(()=>countryFrom.Name == countryFromName && countryTo.Name == countryToName)
+                .List<PostCargo>();
+            
+            return posts;
+        }
     }
 }
